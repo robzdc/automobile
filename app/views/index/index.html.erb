@@ -1,0 +1,8 @@
+<%= form_tag("/search/", :method => "get") do %>
+  <%= label_tag(:make, "Marca:") %>
+  <%= select_tag "make", options_from_collection_for_select(@marcas, "id", "name"), :prompt => "Select Make" %><br />
+	<%= label_tag(:state, "State:") %>
+  <%= select_tag "state", options_from_collection_for_select(@states, "id", "name"), :prompt => "Select State" %><br />
+	
+	<%= submit_tag("Search") %>
+<% end %>

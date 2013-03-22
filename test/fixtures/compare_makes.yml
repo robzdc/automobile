@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  make_id,website_id,value: MyString
+
+two:
+  make_id,website_id,value: MyString

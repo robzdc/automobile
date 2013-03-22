@@ -1,0 +1,10 @@
+<% @results.each do |data| %>
+  <div><a target="_blank" href="<%= data[0]['url'] %>"><%= raw data[0]['image'] %></a></div>
+  <a target="_blank" href="<%= data[0]['url'] %>"><%= data[0]['title'] %></a>
+  <div><%= number_to_currency(data[0]['price'],:unit => "$") %></div>
+  <div><%=  data[0]['location'] %></div>
+	<div><%=  data[0]['phone'] %></div>
+	<div><%=  data[0]['comment'] %></div>
+	<div><%=  data[0]['color'] %></div>
+	<div><%=  data[0]['km'] %></div>
+<% end %>

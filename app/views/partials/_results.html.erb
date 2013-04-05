@@ -1,0 +1,16 @@
+<% if !@results.empty? %>
+	<% @results.each do |data| %>
+  	<div><a target="_blank" href="<%= data[0]['url'] %>"><img class="img-polaroid" src="<%= raw data[0]['image'] %>" width="120" /></a></div>
+    <a target="_blank" href="<%= data[0]['url'] %>"><%= data[0]['title'] %></a>
+    <div><%= number_to_currency(data[0]['price'],:unit => "$") %></div>
+    <div><%=  data[0]['location'] %></div>
+    <div><%=  data[0]['phone'] %></div>
+    <div><%=  data[0]['comment'] %></div>
+    <div><%=  data[0]['color'] %></div>
+    <div><%=  data[0]['km'] %></div>
+  <% end %>
+<% else %>
+		<div class="well well-large">
+      No Results...
+    </div>
+<% end %>

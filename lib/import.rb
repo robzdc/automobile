@@ -55,10 +55,10 @@ module ImportsDB
     #CompareState.delete_all
     state = State.all
     state.each do |row|
-      @existe = CompareState.where("state_id = ? AND website_id = ?",row.id,2)
+      @existe = CompareState.where("state_id = ? AND website_id = ?",row.id,3)
       if @existe.empty?
-        value = row.name.strip.split(" ").join("-")
-        compare = CompareState.new(:state_id => row.id, :website_id => 2, :value => value)
+        value = row.name.strip
+        compare = CompareState.new(:state_id => row.id, :website_id => 3, :value => value)
         compare.save
         puts value
       end

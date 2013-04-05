@@ -3,10 +3,10 @@ class MakesController < ApplicationController
   # GET /makes.json
   def index
     @makes = Make.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @makes }
+      format.json { render json: @makes, :callback => params[:callback] }
     end
   end
 

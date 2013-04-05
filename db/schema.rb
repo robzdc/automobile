@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(:version => 20130321201331) do
 
   create_table "compare_makes", :force => true do |t|
-    t.string   "make_id"
-    t.string   "website_id"
+    t.integer   "make_id"
+    t.integer   "website_id"
     t.string   "value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

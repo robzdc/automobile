@@ -108,6 +108,7 @@ module SemiNuevos
   # soloautos.com
   def soloautos(site)
     
+    
     res = Net::HTTP.get_response(URI.parse(site))
     
     if res.code != 200
@@ -115,94 +116,101 @@ module SemiNuevos
     end
     
 		
-    doc = Nokogiri::HTML(open(site))
+    doc2 = Nokogiri::HTML(open(site))
     
-    
+    @noresults = false
     #initialize variables
     @soloautos = []
     
-    #verify if return 0 results
-    if doc.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
-      @noresults = true
-    end
+    #get total pages
+    @pages = (doc2.css("#numbers").length)
     
-    if !@noresults
-      doc.css('.resultado').each do |auto|
-        
-        #get image
-        auto.css('.img_res').each do |imagen|
-          if !imagen['src'].include? 'http'
-            imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
-          end
-          imagen = imagen['src'].to_s
-          
-          @image =  imagen
-          #big image 
-          imagen.slice! "tn_"
-          @image_big = imagen
-        end
-        
-        #get title
-        auto.css('div.cien.left span a').each do |titulo|
-          @title = titulo.content
-          @href = titulo['href']
-        end
-        
-        #get price 
-        auto.css('.rojo.t16').each do |precio|
-          price = precio.content
-          price.slice! "$"
-          price.slice! "MN"
-          
-          @price = price.strip.delete(',').to_i
-        end
-        
-        #get location
-        auto.css('.w80.left.h30.tc.pt5').each do |location|
-          note=location.search("span")
-          note.remove()
-          note=location.search("br")
-          note.remove()
-          @location = location.content.strip.to_s
-        end
-        
-        #get phone
-        auto.css('.mt05.t14.lh100').each do |phone|
-          @phone = phone.content.strip.to_s
-        end
-        
-        #get comments
-        auto.css('.ml10.left.w420 > .lh110.gris-obscuro.mb05').each do |comments|
-          note=comments.search("strong")
-          note.remove()
-          note=comments.search("a")
-          note.remove()
-          @comment = comments.content.strip.to_s
-        end
-        
-        #get km
-        auto.css('.left.cien.mt05.mb05 strong').each do |km|
-          @km = km.content.strip.to_s
-        end
-        
-        if !@image.nil?  #create only array with data
-          @soloautos << [
-            'id' => SecureRandom.hex,
-            'image' => @image,
-            'image_big' => @image_big,
-            'title' => @title, 
-            'url' => "http://autos-usados.soloautos.com.mx/#{@href}", 
-            'price' => @price, 
-            'location' => @location,
-            'phone' => @phone,
-            'comment' => @comment,
-            'color' => '',
-            'km' => @km
-          ]
-        end  
+    for i in 0..@pages do
+
+      doc = Nokogiri::HTML(open(site+"&por_pagina=30&pagina=#{i*30}"))
+    	
+      #verify if return 0 results
+      if doc.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
+        @noresults = true
       end
-    end
-    
+      
+      if !@noresults
+        doc.css('.resultado').each do |auto|
+          
+          #get image
+          auto.css('.img_res').each do |imagen|
+            if !imagen['src'].include? 'http'
+              imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
+            end
+            imagen = imagen['src'].to_s
+            
+            @image =  imagen
+            #big image 
+            imagen.slice! "tn_"
+            @image_big = imagen
+          end
+          
+          #get title
+          auto.css('div.cien.left span a').each do |titulo|
+            @title = titulo.content
+            @href = titulo['href']
+          end
+          
+          #get price 
+          auto.css('.rojo.t16').each do |precio|
+            price = precio.content
+            price.slice! "$"
+            price.slice! "MN"
+            
+            @price = price.strip.delete(',').to_i
+          end
+          
+          #get location
+          auto.css('.w80.left.h30.tc.pt5').each do |location|
+            note=location.search("span")
+            note.remove()
+            note=location.search("br")
+            note.remove()
+            @location = location.content.strip.to_s
+          end
+          
+          #get phone
+          auto.css('.mt05.t14.lh100').each do |phone|
+            @phone = phone.content.strip.to_s
+          end
+          
+          #get comments
+          auto.css('.ml10.left.w420 > .lh110.gris-obscuro.mb05').each do |comments|
+            note=comments.search("strong")
+            note.remove()
+            note=comments.search("a")
+            note.remove()
+            @comment = comments.content.strip.to_s
+          end
+          
+          #get km
+          auto.css('.left.cien.mt05.mb05 strong').each do |km|
+            @km = km.content.strip.to_s
+          end
+          
+          if !@image.nil?  #create only array with data
+            @soloautos << [
+              'id' => SecureRandom.hex,
+              'image' => @image,
+              'image_big' => @image_big,
+              'title' => @title, 
+              'url' => "http://autos-usados.soloautos.com.mx/#{@href}", 
+              'price' => @price, 
+              'location' => @location,
+              'phone' => @phone,
+              'comment' => @comment,
+              'color' => '',
+              'km' => @km
+            ]
+          end  
+        end
+      end
+    end  #while
   end
   
   # autocom.pro

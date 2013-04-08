@@ -65,15 +65,14 @@ class SearchController < ApplicationController
     @array = []
     res_soloautos = Net::HTTP.get_response(URI.parse("http://autos-usados.soloautos.com.mx/busqueda/autos/"))
     if res_soloautos.code.to_i == 200
-      soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_state}&por_pagina=5#{@soloautos_page}#{@soloautos_price}"))
+      soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_state}#{@soloautos_price}&orden=4"))
     	@array = @soloautos
     end
     
     begin
-      puts "http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&#{@autoplaza_page}#{@autoplaza_marca}#{@autoplaza_state}"
       res_autoplaza = Net::HTTP.get_response(URI.parse("http://usados.autoplaza.com.mx")) 
       if res_autoplaza.code.to_i == 200 
-        autoplaza(URI.encode("http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&#{@autoplaza_page}#{@autoplaza_marca}#{@autoplaza_state}"),@price1,@price2)
+        autoplaza(URI.encode("http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&MaxHits=9999#{@autoplaza_page}#{@autoplaza_marca}#{@autoplaza_state}"),@price1,@price2)
         if @array.empty? 
           @array = @autoplaza
         else
@@ -92,7 +91,7 @@ class SearchController < ApplicationController
     
     res_autocompro = Net::HTTP.get_response(URI.parse("http://autocom.pro/"))
     if res_autocompro.code.to_i == 200
-      autocompro(URI.encode("http://autocom.pro/results?#{@autocompro_state}#{@autocompro_marca}#{@autocompro_page}&limit=5#{@autocompro_price}"))  
+      autocompro(URI.encode("http://autocom.pro/results?#{@autocompro_state}#{@autocompro_marca}#{@autocompro_page}&limit=9999#{@autocompro_price}"))  
       if @array.empty? 
         @array = @autocompro
       else
@@ -101,14 +100,22 @@ class SearchController < ApplicationController
     end
   
     #sort data
-    puts @results
+    
     @results = @array.sort_by {|precio|  
        precio[0]['price'] 
     }.reverse
     
+    session[:results] = @results
+    
     respond_to do |format|
       format.html { render :partial => 'partials/results', :locals => { :marca => @marca, :state => @state} } # index.html.erb
       format.json { render json: @results, :callback => params[:callback] }
+    end
+  end
+  
+  def more(num)
+    respond_to do |format|
+      format.json { render json: session[:results] }
     end
   end
 

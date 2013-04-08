@@ -1,6 +1,18 @@
 // Place all the styles related to the Search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.progress{
-  display:none;
+
+.media:nth-child(odd){ background-color:#eee; }
+.media:nth-child(even){ background-color:#fff; }
+
+.loading{
+  display: none;
+}
+
+#more{
+  margin-top:5px;
+}
+
+#resultados .progress{
+	margin-top: 20px;
 }

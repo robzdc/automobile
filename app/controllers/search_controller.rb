@@ -13,56 +13,86 @@ class SearchController < ApplicationController
   end
 
   def result
-    if !params[:make].empty?
-    	marca = params[:make]
-      @autoplaza_marca = CompareMake.where("make_id = ? AND website_id = ?",marca, 2)
-      if !@autoplaza_marca.empty?
-        @autoplaza_marca = "&Filter:marca=#{@autoplaza_marca[0].value}"
-      end
-      @soloautos_marca = CompareMake.where("make_id = ? AND website_id = ?",marca, 1)
-      if !@soloautos_marca.empty?
+  	
+    # Call next page
+    if !params[:page].blank?
+      page = params[:page].to_i * 5
+      
+      @soloautos_page = "&pagina=#{page}"
+      @autoplaza_page = "MaxHits=#{page+5}&Offset=#{page}"
+      @autocompro_page = "&limitstart=#{page}"
+    else
+      @autoplaza_page = "MaxHits=5&Offset=0"
+    end
+    # Verify if search is by make
+    if !params[:make].blank?
+      @marca = params[:make]
+      @soloautos_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 1)
+      if !@soloautos_marca.blank?
         @soloautos_marca = "&marca=#{@soloautos_marca[0].value}"
       end
-      @autocompro_marca = CompareMake.where("make_id = ? AND website_id = ?",marca, 3)
-      if !@autocompro_marca.empty?
+      @autoplaza_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 2)
+      if !@autoplaza_marca.blank?
+        @autoplaza_marca = "&Filter:marca=#{@autoplaza_marca[0].value}"
+      end
+      @autocompro_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 3)
+      if !@autocompro_marca.blank?
         @autocompro_marca = "&maid=#{@autocompro_marca[0].value}"
       end
     end
-    
-    if !params[:state].empty?
-    	state = params[:state]
-      @autoplaza_state = CompareState.where("state_id = ? AND website_id = ?",state, 2)
+    #call state
+    if !params[:state].blank?
+    	@state = params[:state]
+      @autoplaza_state = CompareState.where("state_id = ? AND website_id = ?",@state, 2)
       @autoplaza_state = "&Filter:estado=#{@autoplaza_state[0].value}"
       
-      @soloautos_state = CompareState.where("state_id = ? AND website_id = ?",state, 1)
+      @soloautos_state = CompareState.where("state_id = ? AND website_id = ?",@state, 1)
       @soloautos_state = "&estado=#{@soloautos_state[0].value}"
       
-      @autocompro_state = CompareState.where("state_id = ? AND website_id = ?",state, 3)
+      @autocompro_state = CompareState.where("state_id = ? AND website_id = ?",@state, 3)
       @autocompro_state = "&estado=#{@autocompro_state[0].value}"
     end
-     
+    #filter price
+    if !params[:price1].blank? || !params[:price2].blank?
+      @price1 = params[:price1]
+      @price2 = params[:price2]
+      
+      @soloautos_price = "&precio1=#{@price1}&precio2=#{@price2}"
+      @autocompro_price = "&minprice=#{@price1}&maxprice=#{@price2}"
+    end
+    
     #Call Functions
     @array = []
-    
     res_soloautos = Net::HTTP.get_response(URI.parse("http://autos-usados.soloautos.com.mx/busqueda/autos/"))
     if res_soloautos.code.to_i == 200
-    	soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_state}"))
+      soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_state}&por_pagina=5#{@soloautos_page}#{@soloautos_price}"))
     	@array = @soloautos
     end
     
-    res_autoplaza = Net::HTTP.get_response(URI.parse("http://usados.autoplaza.com.mx")) 
-    if res_autoplaza.code.to_i == 200 
-    	autoplaza(URI.encode("http://www.autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&MaxHits=20&Offset=0#{@autoplaza_marca}#{@autoplaza_state}"))
-      if @array.empty? 
-        @array = @autoplaza
-      else
-        @array.concat @autoplaza
+    begin
+      puts "http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&#{@autoplaza_page}#{@autoplaza_marca}#{@autoplaza_state}"
+      res_autoplaza = Net::HTTP.get_response(URI.parse("http://usados.autoplaza.com.mx")) 
+      if res_autoplaza.code.to_i == 200 
+        autoplaza(URI.encode("http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&#{@autoplaza_page}#{@autoplaza_marca}#{@autoplaza_state}"),@price1,@price2)
+        if @array.empty? 
+          @array = @autoplaza
+        else
+          @array.concat @autoplaza
+        end
       end
+    rescue Errno::ECONNREFUSED => exc
+      puts "ERROR: #{exc.message}"
+    rescue Errno::ECONNRESET => exc
+      puts "ERROR: #{exc.message}"
+    rescue Timeout::Error => exc
+      puts "ERROR: #{exc.message}"
+    rescue Errno::ETIMEDOUT => exc
+    	puts "ERROR: #{exc.message}"
     end
     
     res_autocompro = Net::HTTP.get_response(URI.parse("http://autocom.pro/"))
     if res_autocompro.code.to_i == 200
-    	autocompro(URI.encode("http://autocom.pro/results?#{@autocompro_state}#{@autocompro_marca}"))  
+      autocompro(URI.encode("http://autocom.pro/results?#{@autocompro_state}#{@autocompro_marca}#{@autocompro_page}&limit=5#{@autocompro_price}"))  
       if @array.empty? 
         @array = @autocompro
       else
@@ -71,12 +101,13 @@ class SearchController < ApplicationController
     end
   
     #sort data
+    puts @results
     @results = @array.sort_by {|precio|  
        precio[0]['price'] 
     }.reverse
     
     respond_to do |format|
-      format.html { render :partial => 'partials/results' } # index.html.erb
+      format.html { render :partial => 'partials/results', :locals => { :marca => @marca, :state => @state} } # index.html.erb
       format.json { render json: @results, :callback => params[:callback] }
     end
   end

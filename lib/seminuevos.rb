@@ -1,4 +1,6 @@
 # encoding: UTF-8
+require 'securerandom' 
+
 module SemiNuevos
 	
   ############################
@@ -13,7 +15,7 @@ module SemiNuevos
   # Km								 		   #
   ############################
   # autoplaza.com
-  def autoplaza(site)
+  def autoplaza(site,price1,price2)
    
     doc = Nokogiri::HTML(open(site))
     
@@ -24,10 +26,13 @@ module SemiNuevos
      
       #get image
       auto.css('.contPic a img').each do |imagen|
-        #imagen.set_attribute('height', '120')  
-        imagen['src'] = imagen['src'].gsub('-100-', '-640-')
        
-        @image =  imagen['src'].to_s
+        #big image
+        imagen_big = imagen['src'].gsub('-100-', '-640-')
+        @image_big = imagen_big.to_s
+        
+        imagen_th = imagen['src'].gsub('-100-', '-240-')
+        @image =  imagen_th.to_s
       end
       
       #get title
@@ -49,10 +54,18 @@ module SemiNuevos
         
         price.slice! "$"
         price.slice! "M.N."
-        
+       
         @price = price.strip.delete(',').to_i
+       
+        @saltar = false
+        if (!price1.blank? && @price < price1.to_i)
+          @saltar = true
+        end
+        if (!price2.blank? && @price > price2.to_i)
+          @saltar = true
+        end
       end
-      
+
       #get location
       auto.css('.descriptCar a p b:first').each do |location|
         @location = location.content.to_s
@@ -72,9 +85,11 @@ module SemiNuevos
         @km = km.content.strip.to_s
       end
       
-      if !@image.nil?  #create only array with data
+      if (!@image.nil? && !@saltar)  #create only array with data
      		@autoplaza << [
+          'id' => SecureRandom.hex,
           'image' => @image,
+          'image_big' => @image_big,
           'title' => @title, 
           'url' => 'http://www.autos-usados.autoplaza.com.mx/Autos/' + @href, 
           'price' => @price, 
@@ -119,11 +134,12 @@ module SemiNuevos
           if !imagen['src'].include? 'http'
             imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
           end
-          #imagen.set_attribute('height', '120')  
-          #big image 
-          #imagen['src'].gsub('tn_', '')
+          imagen = imagen['src'].to_s
           
-          @image =  imagen['src'].to_s
+          @image =  imagen
+          #big image 
+          imagen.slice! "tn_"
+          @image_big = imagen
         end
         
         #get title
@@ -171,7 +187,9 @@ module SemiNuevos
         
         if !@image.nil?  #create only array with data
           @soloautos << [
+            'id' => SecureRandom.hex,
             'image' => @image,
+            'image_big' => @image_big,
             'title' => @title, 
             'url' => "http://autos-usados.soloautos.com.mx/#{@href}", 
             'price' => @price, 
@@ -197,10 +215,13 @@ module SemiNuevos
     doc.css('#products-list tr.alt:not(.border)').each do |auto|
       #get image
       auto.css('td .rel-thumb a img').each do |imagen|
-        #imagen.set_attribute('height', '120')  
-        #imagen['src'] = imagen['src']
-       
-        @image =  imagen['src'].to_s
+        imagen = imagen['src'].to_s
+        
+        @image =  imagen
+        
+        #image big
+        imagen.slice! "th/"
+        @image_big = imagen
       end
       
       #get title
@@ -244,7 +265,9 @@ module SemiNuevos
       
       if !@image.nil?  #create only array with data
         @autocompro << [
+          'id' => SecureRandom.hex,
           'image' => @image,
+          'image_big' => @image_big,
           'title' => @title, 
           'url' => "http://autocom.pro/#{@href}", 
           'price' => @price, 

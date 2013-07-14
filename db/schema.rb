@@ -11,11 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408195226) do
+ActiveRecord::Schema.define(:version => 20130409043202) do
 
   create_table "compare_makes", :force => true do |t|
     t.string   "make_id"
     t.string   "website_id"
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "compare_models", :force => true do |t|
+    t.integer  "model_id"
+    t.integer  "website_id"
     t.string   "value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -37,6 +45,13 @@ ActiveRecord::Schema.define(:version => 20130408195226) do
   end
 
   create_table "makes", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "models", :force => true do |t|
+    t.integer  "make_id"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

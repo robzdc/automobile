@@ -1,4 +1,4 @@
-<% if !@results.empty? %>
+<% if !@results.blank? %>
 	<% @results.each do |data| %>		
 		<div class="media">
       
@@ -28,7 +28,7 @@
 		</div>
   <% end %>
 	
-<button data-make="<%= @marca %>" data-min="<%= @price1 %>" data-max="<%= @price2 %>" data-state="<%= @state %>" id="more" class="btn btn-block" value="2" type="button">More</button>
+<button data-make="<%= @marca %>" data-min="<%= @price1 %>" data-max="<%= @price2 %>" data-state="<%= @state %>" id="more" class="btn btn-block" value="1" type="button">More</button>
 <% else %>
 		<div class="well well-large">
       No Results...

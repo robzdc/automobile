@@ -1,0 +1,29 @@
+<%= form_for(@compare_model) do |f| %>
+  <% if @compare_model.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@compare_model.errors.count, "error") %> prohibited this compare_model from being saved:</h2>
+
+      <ul>
+      <% @compare_model.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :model_id %><br />
+    <%= select_tag "compare_model[model_id]", options_from_collection_for_select(@models, "id", "name",@compare_model.model_id), :prompt => "Select Model" %><br />
+  </div>
+  <div class="field">
+    <%= f.label :website_id %><br />
+    <%= select_tag "compare_model[website_id]", options_from_collection_for_select(@websites, "id", "url",@compare_model.website_id), :prompt => "Select Website" %><br />
+  </div>
+  <div class="field">
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

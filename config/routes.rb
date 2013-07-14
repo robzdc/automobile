@@ -1,4 +1,10 @@
 Automobile::Application.routes.draw do
+  resources :compare_models
+
+
+  resources :models
+
+
   get "search/index"
 
   resources :compare_states
@@ -30,7 +36,8 @@ Automobile::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
   match "/search/" => "search#index"
-
+  match "/search/more" => "search#more"
+  match "/search/getmodels" => "search#getmodels"
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

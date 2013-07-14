@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
     <th></th>
     <th></th>
@@ -10,6 +11,7 @@
 
 <% @makes.each do |make| %>
   <tr>
+    <td><%= make.id %></td>
     <td><%= make.name %></td>
     <td><%= link_to 'Show', make %></td>
     <td><%= link_to 'Edit', edit_make_path(make) %></td>

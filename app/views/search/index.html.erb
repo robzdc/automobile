@@ -2,26 +2,40 @@
   <%= render "partials/header" %>
   <hr>
   	<div class="row">
-      <%= form_tag("/search/result", :method => "get") do %>
-      <div class="span2">
-      	<%= label_tag(:make, "Marca:") %>
-        <%= select_tag "make", options_from_collection_for_select(@marcas, "id", "name"), :class => "span2", :prompt => "Select Make" %>
+      <%= form_tag("/search/result", :method => "get", :id => "search") do %>
+      <div class="controls controls-row">
+        <div class="span2">
+          <%= label_tag(:make, "Marca:") %>
+          <%= select_tag "make", options_from_collection_for_select(@marcas, "id", "name"), :class => "span2", :required => "required", :prompt => "Select Make" %>
+        </div>
+        <div class="span2">
+          <%= label_tag(:state, "State:") %>
+          <%= select_tag "state", options_from_collection_for_select(@states, "id","name"), :class => "span2", :prompt => "Select State" %>
+        </div>
+        <div class="span2">
+          <%= label_tag(:model, "Model:") %>
+          <%= select_tag "model", options_for_select([]), :class => "span2", :prompt => "Select Model" %>             
+        </div>
       </div>
-	  	<div class="span2">
-        <%= label_tag(:state, "State:") %>
-        <%= select_tag "state", options_from_collection_for_select(@states, "id","name"), :class => "span2", :prompt => "Select State" %>
+      <div class="controls controls-row">
+        <div class="span2">
+          <%= label_tag(:price1, "Price From:") %>
+          <%= select_tag "price1", options_for_select(range), :class => "span2", :prompt => "From" %>        
+        </div>
+        <div class="span2">
+          <%= label_tag(:price2, "To:") %>
+          <%= select_tag "price2", options_for_select(range), :class => "span2", :prompt => "To" %>        
+        </div>
       </div>
-      <div class="span2">
-        <%= label_tag(:model, "Model:") %>
-        <%= select_tag "model", options_for_select(["model",1]), :class => "span2", :disabled => true, :prompt => "Model" %>             
-      </div>
-      <div class="span2">
-      	<%= label_tag(:price1, "From:") %>
-        <%= select_tag "price1", options_for_select(range), :class => "span2", :prompt => "From" %>        
-      </div>
-      <div class="span2">
-      	<%= label_tag(:price2, "To:") %>
-        <%= select_tag "price2", options_for_select(range), :class => "span2", :prompt => "To" %>        
+      <div class="controls controls-row">
+        <div class="span2">
+          <%= label_tag(:year1, "Year From:") %>
+          <%= select_tag "year1", options_for_select(range_year), :class => "span2", :prompt => "From" %>        
+        </div>
+        <div class="span2">
+          <%= label_tag(:year2, "To:") %>
+          <%= select_tag "year2", options_for_select(range_year), :class => "span2", :prompt => "To" %>        
+        </div>
       </div>
       <div class="span7">
         <%= submit_tag  "Search", :id => "submit", :class => "btn" %>
@@ -34,7 +48,7 @@
   <!-- Resultados -->
   <div id="resultados">
     <div class="well well-large">Start searching</div>
-    <div class="row text-center loading"><img  src="assets/359.gif" width="40" /></div>
+    <div class="row text-center loading"><img  src="/assets/359.gif" width="40" /></div>
   </div>
 
   <hr>

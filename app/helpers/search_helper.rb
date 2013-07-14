@@ -6,4 +6,14 @@ module SearchHelper
     }
     return @range
   end
+  
+  def range_year
+    @range = Array.new
+    time = Time.new
+    
+    (1920..time.year).each {|x|
+      @range << [x]
+    }
+    return @range.reverse
+  end
 end

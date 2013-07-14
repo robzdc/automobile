@@ -5,7 +5,7 @@ class IndexController < ApplicationController
  	#include ImportsDB
   
   def index
-
+			#seminuevossonora_model
   end
   
 end

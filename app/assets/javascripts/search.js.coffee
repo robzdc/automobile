@@ -23,12 +23,8 @@ $ ->
             $bar.width $bar.width() + (complete/10)
           $bar.text $bar.width() / (complete/100) + "%"
         , 900)
-      $.get "/search/result",
-        page: page
-        make: make
-        state: state
-        price1: price1
-        price2: price2
+      $.get "/search/more",
+        num: num
       , (data) ->
       	
         clearInterval progress
@@ -43,7 +39,7 @@ $ ->
         
       
   
-  $("form").submit ->
+  $("form#search").submit ->
   	
     $("#resultados .well").remove()
     $("#resultados").children().not(".loading").remove()
@@ -57,10 +53,15 @@ $ ->
 
     false
     
-      
-  $("#price1").change ->
-  
-    value = accounting.formatMoney($(this).val())
-    $("#price1_tag").text value
+	#Get model list by make
+	$("#make").change ->
+		
+    make_id = $(this).val()
+    $.getJSON "/search/getmodels", make_id: make_id, (data) ->
+    	
+      $("#model").children("option:not(:first)").remove()
+      $.each data, (key, value) ->
+      	$("#model").append "<option value='"+value.id+"'>"+value.name+"</option>"
     
+    false
     

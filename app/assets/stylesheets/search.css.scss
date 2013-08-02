@@ -1,9 +1,17 @@
 // Place all the styles related to the Search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "partials/header";
 
-.media:nth-child(odd){ background-color:#eee; }
-.media:nth-child(even){ background-color:#fff; }
+.media:nth-child(odd){ 
+  background-color:#A7DBD8; 
+  padding: 20px;
+  margin-top: 13px; margin-bottom: 13px;
+}
+.media:nth-child(even){ 
+  background-color:#95c3c1; 
+  padding: 20px;
+}
 
 .loading{
   display: none;
@@ -16,3 +24,14 @@
 #resultados .progress{
 	margin-top: 20px;
 }
+
+.busqueda{
+  min-height:760px; 
+  background-color: #E5E7DA;
+}
+
+.busqueda .form-search{
+  margin-top:0px;
+}
+
+@import "partials/footer";

@@ -10,7 +10,7 @@ class SearchController < ApplicationController
   def index
     @marcas = Make.all(:order => 'name')
     @states = State.where("country_id = ?",2)
-    
+ 
   end
 
   def result
@@ -150,7 +150,7 @@ class SearchController < ApplicationController
     begin
       if !@soloautos_marca.blank?
         res_soloautos = Net::HTTP.get_response(URI.parse("http://autos-usados.soloautos.com.mx/busqueda/autos/"))
-        if res_soloautos.code.to_i == 200
+        if(res_soloautos.code.to_i == 200 || res_soloautos.code.to_i == 301)
           if @soloautos_total > 1
             (0..(@soloautos_total-1)).each do |i|
               #if !@soloautos_model.blank?
@@ -183,7 +183,7 @@ class SearchController < ApplicationController
     begin
       if !@autoplaza_marca.blank?
       res_autoplaza = Net::HTTP.get_response(URI.parse("http://usados.autoplaza.com.mx")) 
-        if res_autoplaza.code.to_i == 200 
+        if(res_autoplaza.code.to_i == 200 || res_autoplaza.code.to_i == 301)
           autoplaza(URI.encode("http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&Offset=0&MaxHits=9999#{@autoplaza_marca}#{@autoplaza_model}#{@autoplaza_state}"),@price1,@price2,@year1,@year2)
           if @array.blank? 
             @array = @autoplaza
@@ -205,7 +205,7 @@ class SearchController < ApplicationController
     begin
       if !@autocompro_marca.blank?
       res_autocompro = Net::HTTP.get_response(URI.parse("http://autocom.pro/"))
-        if res_autocompro.code.to_i == 200
+        if(res_autocompro.code.to_i == 200 || res_autocompro.code.to_i == 301)
           if !@autocompro_model.blank?
             puts "asdf"
             autocompro(URI.encode("http://autocom.pro/results?#{@autocompro_state}#{@autocompro_marca}#{@autocompro_model}#{@autocompro_page}&limit=9999#{@autocompro_price}#{@autocompro_year}"))   
@@ -230,36 +230,43 @@ class SearchController < ApplicationController
       puts "ERROR: #{exc.message}"
     end
     
-    if !@mercadolibre_marca.blank?
-    res_mercadolibre = Net::HTTP.get_response(URI.parse("http://autos.mercadolibre.com.mx/"))
-      if res_mercadolibre.code.to_i == 200
-        mercadolibre(URI.encode("http://autos.mercadolibre.com.mx/#{@mercadolibre_marca}#{@mercadolibre_model}#{@mercadolibre_state}#{@mercadolibre_price}#{@mercadolibre_year}"))  
-        if @array.blank? 
-          @array = @mercadolibre
-        else
-          @array.concat @mercadolibre
-        end
-      end
-      
-    end
-   
-    if @state.to_i == 26 #check if state is Sonora
-      if @seminuevossonora_total  != 0
-      res_seminuevossonora = Net::HTTP.get_response(URI.parse("http://seminuevossonora.com/"))
-        if res_seminuevossonora.code.to_i == 200
-          if @seminuevossonora_total > 1
-            (0..(@seminuevossonora_total.length - 1)).each do |i|
-              seminuevossonora(URI.encode("http://seminuevossonora.com/autos?order=field_precio_amount&sort=desc&buscar=#{@seminuevossonora_marca[i].value}&s=1#{@seminuevossonora_price}#{@seminuevossonora_year}"))
-              @array = @seminuevossonora
-            end
+    begin 
+      if !@mercadolibre_marca.blank?
+      res_mercadolibre = Net::HTTP.get_response(URI.parse("http://autos.mercadolibre.com.mx/"))
+        if(res_mercadolibre.code.to_i == 200 || res_mercadolibre.code.to_i == 301)
+          mercadolibre(URI.encode("http://autos.mercadolibre.com.mx/#{@mercadolibre_marca}#{@mercadolibre_model}#{@mercadolibre_state}#{@mercadolibre_price}#{@mercadolibre_year}"))  
+          if @array.blank? 
+            @array = @mercadolibre
           else
-              
-            seminuevossonora(URI.encode("http://seminuevossonora.com/autos?order=field_precio_amount&sort=desc&buscar=#{@seminuevossonora_marca[0].value}&s=1#{@seminuevossonora_price}#{@seminuevossonora_year}"))
-              @array = @seminuevossonora
-            
+            @array.concat @mercadolibre
           end
         end
       end
+    rescue Timeout::Error => exc
+      puts "ERROR: #{exc.message}"
+    end
+    
+    begin
+      if @state.to_i == 26 #check if state is Sonora
+        if @seminuevossonora_total  != 0
+        res_seminuevossonora = Net::HTTP.get_response(URI.parse("http://seminuevossonora.com/"))
+          if(res_seminuevossonora.code.to_i == 200 || res_seminuevossonora.code.to_i == 301)
+            if @seminuevossonora_total > 1
+              (0..(@seminuevossonora_total.length - 1)).each do |i|
+                seminuevossonora(URI.encode("http://seminuevossonora.com/autos?order=field_precio_amount&sort=desc&buscar=#{@seminuevossonora_marca[i].value}&s=1#{@seminuevossonora_price}#{@seminuevossonora_year}"))
+                @array = @seminuevossonora
+              end
+            else
+              seminuevossonora(URI.encode("http://seminuevossonora.com/autos?order=field_precio_amount&sort=desc&buscar=#{@seminuevossonora_marca[0].value}&s=1#{@seminuevossonora_price}#{@seminuevossonora_year}"))
+                @array = @seminuevossonora  
+            end
+          end
+        end
+      end
+    rescue Timeout::Error => exc
+      puts "ERROR: #{exc.message}"
+    rescue Errno::ECONNRESET => exc
+      puts "Error: #{exc.message}"
     end
   
     #sort data
@@ -295,7 +302,7 @@ class SearchController < ApplicationController
   #Get models by make
   def getmodels 
     make_id = params[:make_id]
-    @models = Model.where("make_id = ?",make_id)
+    @models = Model.where("make_id = ?",make_id).order("name")
     respond_to do |format|
     	format.json { render json: @models }
     end

@@ -404,7 +404,7 @@ module SemiNuevos
     while @encontro_datos do   #While site have results, request url
       
       doc = Nokogiri::HTML(open(site+"&page=#{@page}"))
-        
+      puts @page
       if doc.search('.pager .pager-last').length == 0
         @encontro_datos = false
       end

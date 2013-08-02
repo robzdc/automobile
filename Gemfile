@@ -16,6 +16,9 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
+  gem "zurb-foundation"
+  gem "compass-rails"
+  gem 'modernizr-rails'
 
   gem 'uglifier', '>= 1.0.3'
 end
@@ -25,7 +28,7 @@ gem 'nokogiri'
 gem 'mechanize'
 gem 'roo'
 gem "less-rails"
-gem "twitter-bootstrap-rails"
+#gem "twitter-bootstrap-rails"
 gem "therubyracer"
 
 # To use ActiveModel has_secure_password

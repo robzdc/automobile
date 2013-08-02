@@ -1,10 +1,11 @@
 <% if !@results.blank? %>
 	<% @results.each do |data| %>		
-		<div class="media">
+		<div class="media columns">
       
-  		<a data-toggle="modal" class="pull-left" href="#myModal<%=  data[0]['id'] %>" ><img align="left" class="img-polaroid" src="<%= raw data[0]['image'] %>" width="120" /></a>
-      
-      <div class="media-body">
+      <div class="large-3 columns">
+  		  <a data-toggle="modal" class="pull-left" href="#myModal<%=  data[0]['id'] %>" ><img align="left" class="img-polaroid" src="<%= raw data[0]['image'] %>" width="120" /></a>
+      </div>
+      <div class="media-body large-9 columns">
         <h3 class="media-heading"><a target="_blank" href="<%= data[0]['url'] %>"><%= data[0]['title'] %></a></h3>
         <div><%= number_to_currency(data[0]['price'],:unit => "$") %></div>
         <div><%=  data[0]['location'] %></div>

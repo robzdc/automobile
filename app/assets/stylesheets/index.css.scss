@@ -1,3 +1,50 @@
 // Place all the styles related to the Index controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+//http://www.colourlovers.com/palette/92095/Giant_Goldfish
+@import "partials/header";
+
+.after-map{
+ max-width: 100%; background-color: #E5E7DA; position:relative 
+}
+
+#new-advertise{
+ background-color: #69D2E7;
+ border:none;
+ color: #333;
+ margin-right: 10px;
+ margin-top: 7px;
+}
+
+#map{
+ width:100%; 
+ height:600px; 
+}
+
+#map img{
+  max-width:none;
+}
+
+.big-map{
+  max-width: 100%; position:relative;
+  background-color: #E5E7DA;
+}
+
+.container{
+  margin:auto;
+}
+
+.container .large-12{
+  margin-top:30px; 
+  max-width:100%;;
+}
+
+.container .large-12 .large-3{
+  padding-bottom: 10px;
+}
+
+.form-search{
+  margin-top: 70px;
+}
+
+@import "partials/form";

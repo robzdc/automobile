@@ -1,4 +1,7 @@
-
+<% 
+# Get location
+#@s = Geocoder.search(request.ip)
+%>
 
 <!-- Navigation -->
  
@@ -18,7 +21,31 @@
         lng: -100.31370,
         scrollwheel: false
       });
-    });
+    
+    
+      GMaps.geolocate({
+        success: function(position) {
+          latitud = position.coords.latitude;
+          longitud = position.coords.longitude;
+          map.setCenter(position.coords.latitude, position.coords.longitude);
+        },
+        error: function(error) {
+          alert('Geolocation failed: '+error.message);
+        },
+        not_supported: function() {
+          alert("Your browser does not support geolocation");
+        },
+        always: function() {
+          $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitud+","+longitud+"&sensor=true",function(data){
+           
+            console.log(data.results[0].address_components);
+            var location = data.results[0].address_components[4].long_name+", "+data.results[0].address_components[5].short_name;
+            $(".second-bar .location").text(location);
+            $("#state option:contains('"+data.results[0].address_components[4].long_name+"')").prop("selected",true);
+          });
+        }
+      });
+   });
   </script>
   <div id="map"></div>
 

@@ -79,6 +79,16 @@ $ ->
     $("#resultados").children().not(".loading").remove()
     $(".loading").fadeIn()
     
+    $.getJSON "/search/getmodels", make_id: make, (data) ->
+    	
+      $("#model").children("option:not(:first)").remove()
+      $.each data, (key, value) ->
+      	$("#model").append "<option value='"+value.id+"'>"+value.name+"</option>"
+        
+      $("#model option[value='" + model + "']").attr "selected", "selected"
+      
+    false
+    
     $.get "/search/result", {make: make,model: model,state: state,price1: price1, price2: price2, year1: year1, year2: year2}, (data) ->
     
       $(".loading").hide()
@@ -98,6 +108,5 @@ $ ->
       $.each data, (key, value) ->
       	$("#model").append "<option value='"+value.id+"'>"+value.name+"</option>"
       
-      $(document).foundation()  if $(window).width() > 768
     false
     

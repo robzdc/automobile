@@ -28,6 +28,7 @@ gem 'nokogiri'
 gem 'mechanize'
 gem 'roo'
 gem "less-rails"
+gem "geocoder"
 #gem "twitter-bootstrap-rails"
 gem "therubyracer"
 

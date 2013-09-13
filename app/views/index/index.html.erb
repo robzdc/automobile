@@ -21,13 +21,91 @@
         lng: -100.31370,
         scrollwheel: false
       });
-    
+            
+      function car_dealer(lat,long){
+       //Foursquare venues
+        var markers_data = [];
+        var ll = lat+","+long;
+        var icon = 'https://foursquare.com/img/categories_v2/shops/automotive_bg_32.png';
+        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:20130911,categoryId:"4eb1c1623b7b52c0e1adc2ec",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
+          var venues = xhr.responseJSON.response.venues;
+         
+          $.each(venues, function(index, value){
+            markers_data.push({
+              lat : value.location.lat,
+              lng : value.location.lng,
+              title : value.name,
+              icon : {
+                size : new google.maps.Size(32, 32),
+                url : icon
+              }
+            });
+          });
+          map.addMarkers(markers_data);
+          
+          for (var i = 0; i < map.markers.length; ++i) {
+            marker = map.markers[i];
+            google.maps.event.addListener(
+             marker, 'click', function() { console.log(marker) });
+          }
+          
+        }); 
+      }
+      
+      function car_wash(lat,long){
+       //Foursquare venues
+        var markers_data = [];
+        var ll = lat+","+long;
+        var icon = 'https://foursquare.com/img/categories_v2/shops/carwash_bg_32.png';
+        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:20130911,categoryId:"4f04ae1f2fb6e1c99f3db0ba",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
+          var venues = xhr.responseJSON.response.venues;
+         
+          $.each(venues, function(index, value){
+            markers_data.push({
+              lat : value.location.lat,
+              lng : value.location.lng,
+              title : value.name,
+              icon : {
+                size : new google.maps.Size(32, 32),
+                url : icon
+              }
+            });
+          });
+          map.addMarkers(markers_data);
+          for (var i = 0; i < map.markers.length; ++i) {
+            marker = map.markers[i];
+            google.maps.event.addListener(
+             marker, 'click', function() { console.log(marker) });
+          }
+        }); 
+      }
+      
+      function my_location(lat,long){
+          var my_location = [];
+          var icon = "https://ss0.4sqi.net/img/centerpoint-139fa4e52a9ccf65cb108a3b402e3bf1.png"
+          my_location.push({
+            lat : latitud,
+            lng : longitud,
+            title : "Mi posición",
+            icon : {
+              size : new google.maps.Size(24, 24),
+              url : icon
+            }
+          });
+      
+          map.addMarkers(my_location);
+      }
     
       GMaps.geolocate({
         success: function(position) {
           latitud = position.coords.latitude;
           longitud = position.coords.longitude;
           map.setCenter(position.coords.latitude, position.coords.longitude);
+          
+          my_location(latitud,longitud);
+          car_dealer(latitud,longitud);
+          car_wash(latitud,longitud);
+               
         },
         error: function(error) {
           alert('Geolocation failed: '+error.message);
@@ -38,7 +116,6 @@
         always: function() {
           $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitud+","+longitud+"&sensor=true",function(data){
            
-            console.log(data.results[0].address_components);
             var location = data.results[0].address_components[4].long_name+", "+data.results[0].address_components[5].short_name;
             $(".second-bar .location").text(location);
             $("#state option:contains('"+data.results[0].address_components[4].long_name+"')").prop("selected",true);

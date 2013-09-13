@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -25,12 +25,18 @@ end
 
 gem 'jquery-rails'
 gem 'nokogiri'
-gem 'mechanize'
 gem 'roo'
 gem "less-rails"
 gem "geocoder"
+gem 'delayed_job_active_record'
 #gem "twitter-bootstrap-rails"
 gem "therubyracer"
+
+group :development do
+  gem 'meta_request'
+  gem 'ruby-prof'
+  gem 'test-unit'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

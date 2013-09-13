@@ -6,20 +6,12 @@ else
   form_id = 'search2'
   offset = 'large-3 columns small-offset-8'
 end 
-=begin
-if params['state'].blank? 
-  state = @s[0].state_code
-else
-  state = params['state']
-end
-=end
 %>
 
-<%=  %>
 <div class="form-search  <%= offset %> ">
   <div class="columns sub-form">
     <h4>Busca tu auto</h4>
-    <%= form_tag("/search", :method => "get", :id => "#{form_id}", :class => "") do %>
+    <%= form_tag("/search", :method => "GET", :id => "#{form_id}", :class => "") do %>
       
       <%= select_tag "make", options_from_collection_for_select(marcas, "id", "name", params['make']), :class => "medium", :prompt => "Selecciona una marca" %>
       

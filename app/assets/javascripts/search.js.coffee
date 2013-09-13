@@ -13,26 +13,11 @@ $ ->
       price1 = $(this).attr "data-min"
       price2 = $(this).attr "data-max"
       that = $(this)
-      $(this).replaceWith('<div class="progress progress-info"><div class="bar" data-value='+num+' style="width: 0%"></div></div>')
-      complete = $(".progress").width()
-      progress = setInterval(->
-          $bar = $(".bar[data-value='"+num+"']")
-          if $bar.width() is complete
-            clearInterval progress
-            $(".progress").removeClass "active"
-          else
-            $bar.width $bar.width() + (complete/10)
-          $bar.text $bar.width() / (complete/100) + "%"
-        , 900)
+      $(this).remove()
       $.get "/search/more",
         num: num
       , (data) ->
       	
-        clearInterval progress
-        $('.bar').width "100%"
-        $('.progress').removeClass "progress-info"
-        $('.progress').addClass "progress-success"
-        $('.bar').text("")
         $("#resultados").append(data).fadeIn 1000 
         $("#more").val parseInt(page) + 1
         moreResults(num)
@@ -43,9 +28,10 @@ $ ->
     $("#resultados .well").remove()
     $("#resultados").children().not(".loading").remove()
     $(".loading").fadeIn()
-    data = $(this).serialize()
-    $.get "/search/result", data, (data) ->
+    datos = $(this).serialize()
+    $.get "/search/result", datos, (data) ->
     	
+      location.hash = "?" + datos
       $(".loading").hide()
       $("#resultados").append(data).fadeIn 1000 
       moreResults(0)
@@ -54,7 +40,7 @@ $ ->
     
   #get parameters from URL
   getParameter = (paramName) ->
-    searchString = window.location.search.substring(1)
+    searchString = window.location.hash.substring 2
     i = undefined
     val = undefined
     params = searchString.split("&")
@@ -74,7 +60,7 @@ $ ->
   year1 = getParameter("year1")
   year2 = getParameter("year2")
   
-  if make? and model? and state? and price1? and price2? and year1? and year2?
+  if make? or model? or state? or price1? or price2? or year1? or year2?
     
     $("#resultados").children().not(".loading").remove()
     $(".loading").fadeIn()
@@ -85,12 +71,20 @@ $ ->
       $.each data, (key, value) ->
       	$("#model").append "<option value='"+value.id+"'>"+value.name+"</option>"
         
-      $("#model option[value='" + model + "']").attr "selected", "selected"
+      $("#make option[value='" + make + "']").prop "selected", true
+      $("#model option[value='" + model + "']").prop "selected", true
+      $("#state option[value='" + state + "']").prop "selected", true
+      $("#price1 option[value='" + price1 + "']").prop "selected", true
+      $("#price2 option[value='" + price2 + "']").prop "selected", true
+      $("#year1 option[value='" + year1 + "']").prop "selected", true
+      $("#year2 option[value='" + year2 + "']").prop "selected", true
       
     false
     
-    $.get "/search/result", {make: make,model: model,state: state,price1: price1, price2: price2, year1: year1, year2: year2}, (data) ->
+    hash = window.location.hash.substring 2
     
+    $.get "/search/result", hash, (data) ->
+      
       $(".loading").hide()
       $("#resultados").append(data).fadeIn 1000 
       moreResults(0)

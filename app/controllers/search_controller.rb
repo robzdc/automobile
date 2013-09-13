@@ -7,13 +7,15 @@ require 'net/http'
 class SearchController < ApplicationController
   include SemiNuevos
   
+  
   def index
     @marcas = Make.all(:order => 'name')
     @states = State.where("country_id = ?",2)
- 
-  end
 
+  end
+=begin
   def result
+
   	session[:results] = []
     # Call next page
     if !params[:page].blank?
@@ -149,22 +151,22 @@ class SearchController < ApplicationController
     
     begin
       if !@soloautos_marca.blank?
+        
         res_soloautos = Net::HTTP.get_response(URI.parse("http://autos-usados.soloautos.com.mx/busqueda/autos/"))
-        if(res_soloautos.code.to_i == 200 || res_soloautos.code.to_i == 301)
+        
+        if(res_soloautos.code.to_i == 200 || res_soloautos.code.to_i == 301) 
           if @soloautos_total > 1
             (0..(@soloautos_total-1)).each do |i|
-              #if !@soloautos_model.blank?
-              #@soloautos_model = @soloautos_model[i].value
-              #else
-              #  @soloautos_model = ""
-              #end
               soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_model_get}#{@soloautos_model[i].value}#{@soloautos_state}#{@soloautos_price}#{@soloautos_year}&orden=4"))
               @array = @soloautos
             end
           else
-            if !@soloautos_model.blank?
+            if !@soloautos_model.blank? 
               @soloautos_model = @soloautos_model[0].value
               soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_model_get}#{@soloautos_model}#{@soloautos_state}#{@soloautos_price}#{@soloautos_year}&orden=4"))
+              @array = @soloautos
+            else
+              soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?#{@soloautos_marca}#{@soloautos_state}#{@soloautos_price}#{@soloautos_year}&orden=4"))              
               @array = @soloautos
             end
           end
@@ -181,10 +183,13 @@ class SearchController < ApplicationController
     end
     
     begin
-      if !@autoplaza_marca.blank?
-      res_autoplaza = Net::HTTP.get_response(URI.parse("http://usados.autoplaza.com.mx")) 
+      if !@autoplaza_marca.blank? 
+        res_autoplaza = Net::HTTP.get_response(URI.parse("http://usados.autoplaza.com.mx")) 
         if(res_autoplaza.code.to_i == 200 || res_autoplaza.code.to_i == 301)
+           @time = Time.now
           autoplaza(URI.encode("http://autos-usados.autoplaza.com.mx/Autos/SearchResultPage.aspx?IsFql=False&Query=&AdditionalQuery=&Offset=0&MaxHits=9999#{@autoplaza_marca}#{@autoplaza_model}#{@autoplaza_state}"),@price1,@price2,@year1,@year2)
+          @time3 = Time.now - @time
+          puts @time3
           if @array.blank? 
             @array = @autoplaza
           else
@@ -207,7 +212,6 @@ class SearchController < ApplicationController
       res_autocompro = Net::HTTP.get_response(URI.parse("http://autocom.pro/"))
         if(res_autocompro.code.to_i == 200 || res_autocompro.code.to_i == 301)
           if !@autocompro_model.blank?
-            puts "asdf"
             autocompro(URI.encode("http://autocom.pro/results?#{@autocompro_state}#{@autocompro_marca}#{@autocompro_model}#{@autocompro_page}&limit=9999#{@autocompro_price}#{@autocompro_year}"))   
             if @array.blank? 
               @array = @autocompro
@@ -278,6 +282,83 @@ class SearchController < ApplicationController
     session[:results] = @results
     @results = @results[0..9]
     
+    respond_to do |format|
+      format.html { render :partial => 'partials/results' } # index.html.erb
+      format.json { render json: @results, :callback => params[:callback] }
+    end
+  end
+=end
+  def result
+    if !params[:make].blank?
+      @marca = params[:make]
+      #autoplaza
+      #@autoplaza_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 2)
+      #@autoplaza_marca = @autoplaza_marca[0].value
+      #mercadolibre
+      #@mercadolibre_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 4)
+      #@mercadolibre_marca = @mercadolibre_marca[0].value
+      #seminuevossonora
+      #@seminuevossonora_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 5)
+      #@seminuevossonora_marca = @seminuevossonora_marca[0].value
+    end
+    if !params[:model].blank?
+      @modelo = params[:model]
+      #autoplaza
+      #@autoplaza_model = CompareModel.where("model_id = ? AND website_id = ?",@modelo, 2)
+      #@autoplaza_model = @autoplaza_model[0].value
+      #mercadolibre
+      #@mercadolibre_model = CompareModel.where("model_id = ? AND website_id = ?",@modelo, 4)
+      #@mercadolibre_model = @mercadolibre_model[0].value
+      #seminuevossonora
+      #@seminuevossonora_model = CompareModel.where("model_id = ? AND website_id = ?",@modelo, 5)
+      #@seminuevossonora_model = @seminuevossonora_model[0].value
+    end
+    if !params[:state].blank?
+      @state = params[:state]
+      #autoplaza
+      #@autoplaza_state = CompareState.where("state_id = ? AND website_id = ?",@state, 2)
+      #@autoplaza_state = @autoplaza_state[0].value
+      #mercadolibre
+      #@mercadolibre_state = CompareState.where("state_id = ? AND website_id = ?",@state, 4)
+      #@mercadolibre_state = @mercadolibre_state[0].value
+      #seminuevossonora
+      #@seminuevossonora_state = CompareState.where("state_id = ? AND website_id = ?",@state, 5)
+      #@seminuevossonora_state = @seminuevossonora_state[0].value
+    end
+    
+    @modelo ||= ""
+    @marca ||= ""
+    @state ||= ""
+    #autoplaza
+    @autoplaza_marca ||= ""
+    @autoplaza_model ||= ""
+    @autoplaza_state ||= ""
+    #mercadolibre
+    @mercadolibre_marca ||= ""
+    @mercadolibre_model ||= ""
+    @mercadolibre_state ||= ""
+    #seminuevossonora
+    @seminuevossonora_marca ||= ""
+    @seminuevossonora_model ||= ""
+    @seminuevossonora_state ||= ""
+    params[:year1] ||= ""
+    params[:year2] ||= ""
+    params[:price1] ||= ""
+    params[:price2] ||= ""
+   
+    @results = Advert.search_make("#{@marca}").search_model("#{@model}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").all
+    
+    #sort data by price
+    @results = @results.sort_by {|precio|  
+      precio.price
+    }.reverse
+    
+    #remove duplicates
+    @results = @results.uniq{|x|[x['title'],x['price'],x['km'],x['comment']]}
+    
+    session[:results] = @results
+    @results = @results[0..9]
+
     respond_to do |format|
       format.html { render :partial => 'partials/results' } # index.html.erb
       format.json { render json: @results, :callback => params[:callback] }

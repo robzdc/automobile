@@ -32,94 +32,93 @@ module SemiNuevos
     @soloautos = []
     
     #get total pages
-    @pages = (doc2.css("#numbers").length)
+    @pages = (doc2.css("#nav:first > #numbers").length)
     
-    for i in 0..@pages do
-
-      doc = Nokogiri::HTML(open(site+"&por_pagina=30&pagina=#{i*30}"))
-    	
-      #verify if return 0 results
-      if doc.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
-        @noresults = true
-      end
-      
-      if !@noresults
-        doc.css('.resultado').each do |auto|
-          
-          #get image
-          auto.css('.img_res').each do |imagen|
-            if !imagen['src'].include? 'http'
-              imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
+    #verify if return 0 results
+    if doc2.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
+      @noresults = true
+    end
+    
+    if !@noresults
+      for i in 0..@pages do
+  
+        doc = Nokogiri::HTML(open(site+"&por_pagina=30&pagina=#{i*30}"))
+        
+        if !@noresults
+          doc.css('.resultado').each do |auto|
+            
+            #get image
+            auto.css('.img_res').each do |imagen|
+              if !imagen['src'].include? 'http'
+                imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
+              end
+              imagen = imagen['src'].to_s
+              
+              @image =  imagen
+              
             end
-            imagen = imagen['src'].to_s
             
-            @image =  imagen
-            #big image 
-            imagen.slice! "tn_"
-            @image_big = imagen
-          end
-          
-          #get title
-          auto.css('div.cien.left span a').each do |titulo|
-            @title = titulo.content
-            @href = titulo['href']
-          end
-          
-          #get price 
-          auto.css('.rojo.t16').each do |precio|
-            price = precio.content
-            price.slice! "$"
-            price.slice! "MN"
+            #get title
+            auto.css('div.cien.left span a').each do |titulo|
+              @title = titulo.content
+              @href = titulo['href']
+            end
             
-            @price = price.strip.delete(',').to_i
+            #get price 
+            auto.css('.rojo.t16').each do |precio|
+              price = precio.content
+              price.slice! "$"
+              price.slice! "MN"
+              
+              @price = price.strip.delete(',').to_i
+            end
+            
+            #get location
+            auto.css('.w80.left.h30.tc.pt5').each do |location|
+              note=location.search("span")
+              note.remove()
+              note=location.search("br")
+              note.remove()
+              @location = location.content.strip.to_s
+            end
+            
+            #get phone
+            auto.css('.mt05.t14.lh100').each do |phone|
+              @phone = phone.content.strip.to_s
+            end
+            
+            #get comments
+            auto.css('.ml10.left.w420 > .lh110.gris-obscuro.mb05').each do |comments|
+              note=comments.search("strong")
+              note.remove()
+              note=comments.search("a")
+              note.remove()
+              @comment = comments.content.strip.to_s
+            end
+            
+            #get km
+            auto.css('.left.cien.mt05.mb05 strong').each do |km|
+              @km = km.content.strip.to_s
+            end 
+            
+            if !@image.nil?  #create only array with data
+              @soloautos << [
+                'id' => SecureRandom.hex,
+                'image' => @image,
+                'title' => @title, 
+                'url' => "#{@href}", 
+                'price' => @price, 
+                'location' => @location,
+                'phone' => @phone,
+                'comment' => @comment,
+                'color' => '',
+                'km' => @km
+              ]
+            end  
           end
-          
-          #get location
-          auto.css('.w80.left.h30.tc.pt5').each do |location|
-            note=location.search("span")
-            note.remove()
-            note=location.search("br")
-            note.remove()
-            @location = location.content.strip.to_s
-          end
-          
-          #get phone
-          auto.css('.mt05.t14.lh100').each do |phone|
-            @phone = phone.content.strip.to_s
-          end
-          
-          #get comments
-          auto.css('.ml10.left.w420 > .lh110.gris-obscuro.mb05').each do |comments|
-            note=comments.search("strong")
-            note.remove()
-            note=comments.search("a")
-            note.remove()
-            @comment = comments.content.strip.to_s
-          end
-          
-          #get km
-          auto.css('.left.cien.mt05.mb05 strong').each do |km|
-            @km = km.content.strip.to_s
-          end 
-          
-          if !@image.nil?  #create only array with data
-            @soloautos << [
-              'id' => SecureRandom.hex,
-              'image' => @image,
-              'image_big' => @image_big,
-              'title' => @title, 
-              'url' => "#{@href}", 
-              'price' => @price, 
-              'location' => @location,
-              'phone' => @phone,
-              'comment' => @comment,
-              'color' => '',
-              'km' => @km
-            ]
-          end  
         end
-      end
-    end  #while
+      end  #while
+    end 
   end
     
   # autoplaza.com
@@ -134,10 +133,6 @@ module SemiNuevos
      
       #get image
       auto.css('.contPic a img').each do |imagen|
-       
-        #big image
-        imagen_big = imagen['src'].gsub('-100-', '-640-')
-        @image_big = imagen_big.to_s
         
         imagen_th = imagen['src'].gsub('-100-', '-240-')
         @image =  imagen_th.to_s
@@ -211,9 +206,7 @@ module SemiNuevos
      
       if (!@image.nil? && !@saltar && !@saltar2)  #create only array with data
      		@autoplaza << [
-          'id' => SecureRandom.hex,
           'image' => @image,
-          'image_big' => @image_big,
           'title' => @title, 
           'url' => 'http://www.autos-usados.autoplaza.com.mx/Autos/' + @href, 
           'price' => @price, 
@@ -393,8 +386,8 @@ module SemiNuevos
 
   end
     
-  # seminuevossonora.com
-    def seminuevossonora(site)
+  #seminuevossonora.com
+  def seminuevossonora(site)
     @encontro_datos = true 
     @page = 0
     
@@ -413,7 +406,7 @@ module SemiNuevos
         #get image
         auto.css('td.views-field-field-foto-fid a img').each do |imagen|
           imagen = imagen['src'].to_s
-         
+          
           @image =  imagen
         end
         
@@ -463,12 +456,11 @@ module SemiNuevos
             'km' => ''
             ]
         end
-       
+        
       end
       #sum 51 results
       @page = @page+1
     end
-
   end    
   
 end

@@ -11,7 +11,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409043202) do
+ActiveRecord::Schema.define(:version => 20130903035531) do
+
+  create_table "adverts", :force => true do |t|
+    t.string   "image"
+    t.string   "title"
+    t.string   "url"
+    t.integer  "price"
+    t.string   "location"
+    t.string   "phone"
+    t.text     "comment"
+    t.string   "color"
+    t.integer  "km"
+    t.string   "make"
+    t.string   "model"
+    t.string   "state"
+    t.integer  "year"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "adverts", ["km"], :name => "idx_advert_km"
+  add_index "adverts", ["make"], :name => "idx_advert_make"
+  add_index "adverts", ["model"], :name => "idx_advert_model"
+  add_index "adverts", ["price"], :name => "idx_advert_price"
+  add_index "adverts", ["state"], :name => "idx_advert_state"
+  add_index "adverts", ["year"], :name => "idx_advert_year"
 
   create_table "compare_makes", :force => true do |t|
     t.string   "make_id"
@@ -43,6 +68,22 @@ ActiveRecord::Schema.define(:version => 20130409043202) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "makes", :force => true do |t|
     t.string   "name"

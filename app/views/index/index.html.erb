@@ -13,6 +13,12 @@
 <div class="row big-map">
   <script>
     var map;
+    var d = new Date();
+    var curr_date = ("0" + d.getDate()).slice(-2);
+    var curr_month = ("0" + (d.getMonth() + 1)).slice(-2); //Months are zero based
+    var curr_year = d.getFullYear();
+    var date = curr_year+""+curr_month+""+curr_date;
+    
     $(document).ready(function(){
       map = new GMaps({
         div: '#map',
@@ -27,10 +33,13 @@
         var markers_data = [];
         var ll = lat+","+long;
         var icon = 'https://foursquare.com/img/categories_v2/shops/automotive_bg_32.png';
-        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:20130911,categoryId:"4eb1c1623b7b52c0e1adc2ec",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
+        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:date,categoryId:"4eb1c1623b7b52c0e1adc2ec",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
           var venues = xhr.responseJSON.response.venues;
          
           $.each(venues, function(index, value){
+            var address = (typeof value.location.address == "undefined" ? "":value.location.address);
+            var phone = (typeof value.contact.phone == "undefined" ? "":value.contact.phone);
+            var crosstreet = (typeof value.location.crossStreet == "undefined" ? "":value.location.crossStreet);
             markers_data.push({
               lat : value.location.lat,
               lng : value.location.lng,
@@ -38,16 +47,43 @@
               icon : {
                 size : new google.maps.Size(32, 32),
                 url : icon
+              },
+              infoWindow: {
+                content: '<h4>'+value.name+'</h4><p>'+address+'</p><p>'+phone+'</p><p>'+crosstreet+'</p>'
               }
             });
           });
           map.addMarkers(markers_data);
           
-          for (var i = 0; i < map.markers.length; ++i) {
-            marker = map.markers[i];
-            google.maps.event.addListener(
-             marker, 'click', function() { console.log(marker) });
-          }
+        }); 
+      }
+      
+      function car_shop(lat,long){
+       //Foursquare venues
+        var markers_data = [];
+        var ll = lat+","+long;
+        var icon = 'https://foursquare.com/img/categories_v2/shops/automotive_bg_32.png';
+        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:date,categoryId:"4bf58dd8d48988d124951735",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
+          var venues = xhr.responseJSON.response.venues;
+         
+          $.each(venues, function(index, value){
+            var address = (typeof value.location.address == "undefined" ? "":value.location.address);
+            var phone = (typeof value.contact.phone == "undefined" ? "":value.contact.phone);
+            var crosstreet = (typeof value.location.crossStreet == "undefined" ? "":value.location.crossStreet);
+            markers_data.push({
+              lat : value.location.lat,
+              lng : value.location.lng,
+              title : value.name,
+              icon : {
+                size : new google.maps.Size(32, 32),
+                url : icon
+              },
+              infoWindow: {
+                content: '<h4>'+value.name+'</h4><p>'+address+'</p><p>'+phone+'</p><p>'+crosstreet+'</p>'
+              }
+            });
+          });
+          map.addMarkers(markers_data);
           
         }); 
       }
@@ -57,10 +93,13 @@
         var markers_data = [];
         var ll = lat+","+long;
         var icon = 'https://foursquare.com/img/categories_v2/shops/carwash_bg_32.png';
-        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:20130911,categoryId:"4f04ae1f2fb6e1c99f3db0ba",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
+        var xhr = $.getJSON('https://api.foursquare.com/v2/venues/search',{ll:ll,v:date,categoryId:"4f04ae1f2fb6e1c99f3db0ba",llAcc:200,locale:"es",client_id:"WWBWOFXGX5MRMIVEJINE5RNTMYM0YJR2WJLIG2QG4YCN3UF0",client_secret:"5UPJJRHL02RKW0Y0MJHSTH2N2CJGQHUDLUZTSJHP51VCOJLS"},function(data){
           var venues = xhr.responseJSON.response.venues;
          
           $.each(venues, function(index, value){
+            var address = (typeof value.location.address == "undefined" ? "":value.location.address);
+            var phone = (typeof value.contact.phone == "undefined" ? "":value.contact.phone);
+            var crosstreet = (typeof value.location.crossStreet == "undefined" ? "":value.location.crossStreet);
             markers_data.push({
               lat : value.location.lat,
               lng : value.location.lng,
@@ -68,15 +107,17 @@
               icon : {
                 size : new google.maps.Size(32, 32),
                 url : icon
+              },
+              /*click: function(e){ 
+                
+              }*/
+              infoWindow: {
+                content: '<h4>'+value.name+'</h4><p>'+address+'</p><p>'+phone+'</p><p>'+crosstreet+'</p>'
               }
             });
           });
           map.addMarkers(markers_data);
-          for (var i = 0; i < map.markers.length; ++i) {
-            marker = map.markers[i];
-            google.maps.event.addListener(
-             marker, 'click', function() { console.log(marker) });
-          }
+          
         }); 
       }
       
@@ -103,6 +144,7 @@
           map.setCenter(position.coords.latitude, position.coords.longitude);
           
           my_location(latitud,longitud);
+          car_shop(latitud,longitud);
           car_dealer(latitud,longitud);
           car_wash(latitud,longitud);
                
@@ -114,11 +156,11 @@
           alert("Your browser does not support geolocation");
         },
         always: function() {
-          $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitud+","+longitud+"&sensor=true",function(data){
+          $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitud+","+longitud+"&sensor=true",function(data){
            
             var location = data.results[0].address_components[4].long_name+", "+data.results[0].address_components[5].short_name;
             $(".second-bar .location").text(location);
-            $("#state option:contains('"+data.results[0].address_components[4].long_name+"')").prop("selected",true);
+            $("#state option:contains('"+data.results[0].address_components[5].long_name+"')").prop("selected",true);
           });
         }
       });
@@ -135,26 +177,39 @@
 <div class="row after-map">
 <div class="large-10 container">
   
-  <div class="large-12">
-    <div class="large-3 columns">
-      <img src="http://placehold.it/600x500/A7DBD8/&text=Thumbnail">
+  <div class="large-12 advert-row">
+    <div class="small-3 columns">
+      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
     </div>
     
-    <div class="large-3 columns">
-      <img src="http://placehold.it/600x500/A7DBD8/&text=Thumbnail">
+    <div class="small-3 columns">
+      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
     </div>
     
-    <div class="large-3 columns">
-      <img src="http://placehold.it/600x500/A7DBD8/&text=Thumbnail">
+    <div class="small-3 columns">
+      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
     </div>
     
-    <div class="large-3 columns">
-      <img src="http://placehold.it/600x500/A7DBD8&text=Thumbnail">
+    <div class="small-3 columns">
+      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
     </div>
   </div>
   
   <div class="large-12">
-    
+    <section>
+      <div class="large-5 columns">
+        <h1>Autos seminuevos de Agencias y Lotes certificados</1>
+        <p>
+          Venta de autos usados y seminuevos en Mexico
+        </p>
+      </div>
+      <div class="large-5 columns">
+        <h1>Autos nuevos y autos ussados</1>
+        <p>
+          Encuentra autos y camionetas usadas, nuevas y seminuevas de todas marcas y modelos en venta.
+        </p>
+      </div>
+    </section>
   </div>
   
 </div>

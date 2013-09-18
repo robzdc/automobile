@@ -8,7 +8,7 @@ else
 end 
 %>
 
-<div class="form-search  <%= offset %> ">
+<div class="form-search  <%= form_id + ' '+ offset %> ">
   <div class="columns sub-form">
     <h4>Busca tu auto</h4>
     <%= form_tag("/search", :method => "GET", :id => "#{form_id}", :class => "") do %>

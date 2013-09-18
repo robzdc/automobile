@@ -4,9 +4,23 @@
   z-index: 999;
 }
 
+.form-search.search{
+  position: relative !important ;
+  top: 0;
+  z-index: 999;
+}
+
+.form-search.search .sub-form{
+  position: relative !important ;
+  top: 0;
+  z-index: 999;
+  width: 300px;
+}
+
 .form-search div.sub-form{
   background-color: #69D2E7;
   padding-bottom: 30px;
+  
 }
 
 .form-search form{

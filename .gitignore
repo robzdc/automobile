@@ -1,0 +1,11 @@
+*.rbc
+*.sassc
+.sass-cache
+.rspec
+log/*
+tmp/*
+config/local_env.yml
+db/*.sqlite3
+spec/tmp/*
+*.orig
+.project

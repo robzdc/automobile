@@ -1,7 +1,7 @@
 
 <% if !@results.blank? %>
 	<% @results.each do |data| %>		
-		<div class="media columns">
+		<div class="media small-11 right columns">
       
       <div class="large-3 columns">
   		  <a class="pull-left" href="<%= data.url %>" ><img align="left" class="img-polaroid" src="<%= raw data.image %>" width="120" /></a>
@@ -21,10 +21,11 @@
       </div>
 		</div>
   <% end %>
-	
-<button data-make="<%= @marca %>" data-min="<%= @price1 %>" data-max="<%= @price2 %>" data-state="<%= @state %>" id="more" class="btn btn-block" value="1" type="button">More</button>
+	<div class="small-11 small-offset-1">
+    <button data-make="<%= @marca %>" data-min="<%= @price1 %>" data-max="<%= @price2 %>" data-state="<%= @state %>" id="more" class="btn btn-block" value="1" type="button">More</button>
+  </div>
 <% else %>
-		<div class="well well-large">
+		<div class="panel">
       No Results...
     </div>
 <% end %>

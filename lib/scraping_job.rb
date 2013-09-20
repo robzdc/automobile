@@ -459,16 +459,16 @@ module Scraping
   #Obtener anuncios de paginas y guardarlas en la base de datos
   def get_soloautos
     @array = []
-    states = State.where(:country_id => 2).limit(1)
+    states = State.where(:country_id => 2)
     states.each do |state|
       
       #soloautos
       @compare_state = CompareState.where(:state_id => state.id, :website_id => 1)
-      makes = Make.limit(1)
+      makes = Make.all
       makes.each do |make|
         @compare_make = CompareMake.where(:make_id => make.id, :website_id => 1)
         
-        models = Model.where(:make_id => make.id).limit(1)
+        models = Model.where(:make_id => make.id)
         models.each do |model|
           @compare_model = CompareModel.where(:model_id => model.id, :website_id => 1)
           if !@compare_model.blank?

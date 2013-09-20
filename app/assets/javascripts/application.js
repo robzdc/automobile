@@ -11,10 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require foundation 
 //= require jquery_ujs
-//= require map
-//= require gmaps
-//= require foundation
+//= require index
+//= require search
 //= require_tree .
 
 

@@ -17,7 +17,7 @@
   	<title><%= content_for?(:title) ? yield(:title) : "Compra Venta de seminuevos" %></title>
 
   	<%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application" %>
+	<%= javascript_include_tag "application", controller_name %>
  
   	<%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
@@ -26,9 +26,11 @@
   <body>
     <%= yield %>
     <script>
-      if ($(window).width() > 768) {
-        $(document).foundation();
-      }
+      $(function(){
+        if ($(window).width() > 768) {
+          $(document).foundation();
+        }
+      });
     </script>
   </body>
 </html>

@@ -22,7 +22,7 @@ production:
   adapter: mysql2
   encoding: utf8
   collation: utf8_general_ci
-  database: automobile_production
+  database: automobile_prod
   pool: 5
   username: "root"
   password: "5n3ll1975"

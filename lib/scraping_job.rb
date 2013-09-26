@@ -457,9 +457,9 @@ module Scraping
   end
 
   #Obtener anuncios de paginas y guardarlas en la base de datos
-  def get_soloautos
+  def get_soloautos(state)
     @array = []
-    states = State.where(:country_id => 2)
+    states = State.where(:country_id => 2, :id => state)
     states.each do |state|
       
       #soloautos
@@ -472,7 +472,7 @@ module Scraping
         models.each do |model|
           @compare_model = CompareModel.where(:model_id => model.id, :website_id => 1)
           if !@compare_model.blank?
-            @year = [1920,1930,1940,1950,1960,1970,1980,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014]
+            @year = [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014]
             @year.each do |year|
               begin
                 soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?&marca=#{@compare_make[0].value}&modelo=#{@compare_model[0].value}&estado=#{@compare_state[0].value}&precio1=&precio2=&anio1=#{year}&anio2=#{year}&orden=4"),make.id,model.id,state.id,year)
@@ -569,20 +569,20 @@ module Scraping
     
   def get_autocompro
     @array = []
-    states = State.where(:country_id => 2).limit(5).offset(5)
+    states = State.where(:country_id => 2)
     states.each do |state|
-      
+      puts state.name
       #autocompro
       @compare_state = CompareState.where(:state_id => state.id, :website_id => 3)
-      makes = Make.where(:id => 4).limit(1)
+      makes = Make.all
       makes.each do |make|
         @compare_make = CompareMake.where(:make_id => make.id, :website_id => 3)
         
-        models = Model.where(:make_id => make.id).limit(1)
+        models = Model.where(:make_id => make.id)
         models.each do |model|
           @compare_model = CompareModel.where(:model_id => model.id, :website_id => 3)
           if !@compare_model.blank?
-            @year = [1920,1930,1940,1950,1960,1970,1980,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014]
+            @year = [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014]
             @year.each do |year|
               begin
                 autocompro(URI.encode("http://autocom.pro/results?&estado=#{@compare_state[0].value}&maid=#{@compare_make[0].value}&moid=#{@compare_model[0].value}&limitstart=0&limit=9999&minyear=#{year}&maxyear=#{year}"),make.id,model.id,state.id,year)   

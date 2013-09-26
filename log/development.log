@@ -1,2 +1,5 @@
 Connecting to database specified by database.yml
-  [1m[36m (50.5ms)[0m  [1mDELETE FROM sessions[0m
+SQLite3::CorruptException: malformed database schema (unique_schema_migrations) - no such table: main.schema_migrations: PRAGMA table_info("states")
+  [1m[36mState Load (0.4ms)[0m  [1mSELECT "states".* FROM "states" WHERE "states"."country_id" = 2[0m
+  [1m[35mState Load (0.3ms)[0m  SELECT "states".* FROM "states" WHERE "states"."country_id" = 2 LIMIT 1
+Connecting to database specified by database.yml

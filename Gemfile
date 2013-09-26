@@ -37,6 +37,7 @@ gem 'delayed_job_active_record'
 #gem "twitter-bootstrap-rails"
 gem "therubyracer"
 #gem "libv8"
+gem "parallel"
 
 group :development do
   gem 'meta_request'

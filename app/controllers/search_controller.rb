@@ -291,39 +291,12 @@ class SearchController < ApplicationController
   def result
     if !params[:make].blank?
       @marca = params[:make]
-      #autoplaza
-      #@autoplaza_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 2)
-      #@autoplaza_marca = @autoplaza_marca[0].value
-      #mercadolibre
-      #@mercadolibre_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 4)
-      #@mercadolibre_marca = @mercadolibre_marca[0].value
-      #seminuevossonora
-      #@seminuevossonora_marca = CompareMake.where("make_id = ? AND website_id = ?",@marca, 5)
-      #@seminuevossonora_marca = @seminuevossonora_marca[0].value
     end
     if !params[:model].blank?
       @modelo = params[:model]
-      #autoplaza
-      #@autoplaza_model = CompareModel.where("model_id = ? AND website_id = ?",@modelo, 2)
-      #@autoplaza_model = @autoplaza_model[0].value
-      #mercadolibre
-      #@mercadolibre_model = CompareModel.where("model_id = ? AND website_id = ?",@modelo, 4)
-      #@mercadolibre_model = @mercadolibre_model[0].value
-      #seminuevossonora
-      #@seminuevossonora_model = CompareModel.where("model_id = ? AND website_id = ?",@modelo, 5)
-      #@seminuevossonora_model = @seminuevossonora_model[0].value
     end
     if !params[:state].blank?
       @state = params[:state]
-      #autoplaza
-      #@autoplaza_state = CompareState.where("state_id = ? AND website_id = ?",@state, 2)
-      #@autoplaza_state = @autoplaza_state[0].value
-      #mercadolibre
-      #@mercadolibre_state = CompareState.where("state_id = ? AND website_id = ?",@state, 4)
-      #@mercadolibre_state = @mercadolibre_state[0].value
-      #seminuevossonora
-      #@seminuevossonora_state = CompareState.where("state_id = ? AND website_id = ?",@state, 5)
-      #@seminuevossonora_state = @seminuevossonora_state[0].value
     end
     
     @modelo ||= ""

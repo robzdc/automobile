@@ -83,6 +83,7 @@ GEM
     mysql2 (0.3.13)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    parallel (0.8.4)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -162,6 +163,7 @@ DEPENDENCIES
   modernizr-rails
   mysql2
   nokogiri
+  parallel
   rails (= 3.2.13)
   roo
   ruby-prof

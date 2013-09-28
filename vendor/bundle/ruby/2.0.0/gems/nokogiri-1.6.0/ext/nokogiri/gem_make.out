@@ -1,0 +1,36 @@
+/home/ubuntu/.rvm/rubies/ruby-2.0.0-p247/bin/ruby extconf.rb 
+Extracting libxml2-2.8.0.tar.gz into tmp/i686-linux-gnu/ports/libxml2/2.8.0... OK
+Running 'configure' for libxml2 2.8.0... OK
+Running 'compile' for libxml2 2.8.0... OK
+Running 'install' for libxml2 2.8.0... OK
+Activating libxml2 2.8.0 (from /opt/nginx/html/automobile/vendor/bundle/ruby/2.0.0/gems/nokogiri-1.6.0/ports/i686-linux-gnu/libxml2/2.8.0)...
+Extracting libxslt-1.1.26.tar.gz into tmp/i686-linux-gnu/ports/libxslt/1.1.26... OK
+Running 'configure' for libxslt 1.1.26... OK
+Running 'compile' for libxslt 1.1.26... ERROR, review 'tmp/i686-linux-gnu/ports/libxslt/1.1.26/compile.log' to see what happened.
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/home/ubuntu/.rvm/rubies/ruby-2.0.0-p247/bin/ruby
+/opt/nginx/html/automobile/vendor/bundle/ruby/2.0.0/gems/mini_portile-0.5.1/lib/mini_portile.rb:251:in `block in execute': Failed to complete compile task (RuntimeError)
+	from /opt/nginx/html/automobile/vendor/bundle/ruby/2.0.0/gems/mini_portile-0.5.1/lib/mini_portile.rb:243:in `chdir'
+	from /opt/nginx/html/automobile/vendor/bundle/ruby/2.0.0/gems/mini_portile-0.5.1/lib/mini_portile.rb:243:in `execute'
+	from /opt/nginx/html/automobile/vendor/bundle/ruby/2.0.0/gems/mini_portile-0.5.1/lib/mini_portile.rb:61:in `compile'
+	from /opt/nginx/html/automobile/vendor/bundle/ruby/2.0.0/gems/mini_portile-0.5.1/lib/mini_portile.rb:101:in `cook'
+	from extconf.rb:101:in `block in <main>'
+	from extconf.rb:131:in `call'
+	from extconf.rb:131:in `block in <main>'
+	from extconf.rb:122:in `tap'
+	from extconf.rb:122:in `<main>'

@@ -1,112 +1,109 @@
 module Scraping
-  require 'open-uri'
-  require 'spreadsheet'
-  require 'net/http'
+  #require 'open-uri'
+  #require 'net/http'
   
   # soloautos.com
   def self.soloautos(site,make,model,state,year1)
-    res = Net::HTTP.get_response(URI.parse(site))
+    #res = Net::HTTP.get_response(URI.parse(site))
     
-    if res.code != 200
-      @error500 = true
-    end
+    #if res.code != 200
+    #  @error500 = true
+    #end
     
-    doc2 = Nokogiri::HTML(open(site))
+    #doc2 = Nokogiri::HTML(site)
     
-    @noresults = false
+    #@noresults = false
     #initialize variables
-    @soloautos = []
+    #@soloautos = []
     
     #get total pages
-    @pages = (doc2.css("#nav:first > #numbers").length)
+    #@pages = (doc2.css("#nav:first > #numbers").length)
     
     #verify if return 0 results
-    if doc2.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
-      @noresults = true
-    end
+    #if doc2.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
+    #  @noresults = true
+    #end
     
-    if !@noresults
-      for i in 0..@pages do
+    #if !@noresults
+      #for i in 0..@pages do
   
-        doc = Nokogiri::HTML(open(site+"&por_pagina=30&pagina=#{i*30}"))
+        #doc = Nokogiri::HTML(site open(site+"&por_pagina=30&pagina=#{i*30}"))
         
-          doc.css('.resultado').each do |auto|
-            
-            #get image
-            auto.css('.img_res').each do |imagen|
-              if !imagen['src'].include? 'http'
-                imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
-              end
-              imagen = imagen['src'].to_s
-              
-              @image =  imagen
-            end
-            
-            #get title
-            auto.css('div.cien.left span a').each do |titulo|
-              @title = titulo.content
-              @href = titulo['href']
-            end
-            
-            #get price 
-            auto.css('.rojo.t16').each do |precio|
-              price = precio.content
-              price.slice! "$"
-              price.slice! "MN"
-              
-              @price = price.strip.delete(',').to_i
-            end
-            
-            #get location
-            auto.css('.w80.left.h30.tc.pt5').each do |location|
-              note=location.search("span")
-              note.remove()
-              note=location.search("br")
-              note.remove()
-              @location = location.content.strip.to_s
-            end
-            
-            #get phone
-            auto.css('.mt05.t14.lh100').each do |phone|
-              @phone = phone.content.strip.to_s
-            end
-            
-            #get comments
-            auto.css('.ml10.left.w420 > .lh110.gris-obscuro.mb05').each do |comments|
-              note=comments.search("strong")
-              note.remove()
-              note=comments.search("a")
-              note.remove()
-              @comment = comments.content.strip.to_s
-            end
-            
-            #get km
-            auto.css('.left.cien.mt05.mb05 strong').each do |km|
-              km = km.content
-              km.slice! "km."
-              
-              @km = km.strip.delete(',').to_i
-            end 
-            
-            if !@image.nil?  #create only array with data
-              @soloautos << [
-                'image' => @image,
-                'title' => @title, 
-                'url' => "#{@href}", 
-                'price' => @price, 
-                'location' => @location,
-                'phone' => @phone,
-                'comment' => @comment,
-                'color' => '',
-                'km' => @km,
-                'make' => make,
-                'model' => model,
-                'state' => state,
-                'year' => year1
-              ]
-            end  
-          end
-      end  #while
+    site.css('.resultado').each do |auto|
+      
+      #get image
+      auto.css('.img_res').each do |imagen|
+        if !imagen['src'].include? 'http'
+          imagen['src'] = 'http://autos-usados.soloautos.com.mx/'+imagen['src']   
+        end
+        imagen = imagen['src'].to_s
+        
+        @image =  imagen
+      end
+      
+      #get title
+      auto.css('div.cien.left span a').each do |titulo|
+        @title = titulo.content
+        @href = titulo['href']
+      end
+      
+      #get price 
+      auto.css('.rojo.t16').each do |precio|
+        price = precio.content
+        price.slice! "$"
+        price.slice! "MN"
+        
+        @price = price.strip.delete(',').to_i
+      end
+      
+      #get location
+      auto.css('.w80.left.h30.tc.pt5').each do |location|
+        note=location.search("span")
+        note.remove()
+        note=location.search("br")
+        note.remove()
+        @location = location.content.strip.to_s
+      end
+      
+      #get phone
+      auto.css('.mt05.t14.lh100').each do |phone|
+        @phone = phone.content.strip.to_s
+      end
+      
+      #get comments
+      auto.css('.ml10.left.w420 > .lh110.gris-obscuro.mb05').each do |comments|
+        note=comments.search("strong")
+        note.remove()
+        note=comments.search("a")
+        note.remove()
+        @comment = comments.content.strip.to_s
+      end
+      
+      #get km
+      auto.css('.left.cien.mt05.mb05 strong').each do |km|
+        km = km.content
+        km.slice! "km."
+        
+        @km = km.strip.delete(',').to_i
+      end 
+      
+      if !@image.nil?  #create only array with data
+        @soloautos << [
+          'image' => @image,
+          'title' => @title, 
+          'url' => "#{@href}", 
+          'price' => @price, 
+          'location' => @location,
+          'phone' => @phone,
+          'comment' => @comment,
+          'color' => '',
+          'km' => @km,
+          'make' => make,
+          'model' => model,
+          'state' => state,
+          'year' => year1
+          ]
+      end  
     end   
   end
     
@@ -459,26 +456,64 @@ module Scraping
   #Obtener anuncios de paginas y guardarlas en la base de datos
   def get_soloautos(make_num)
     @array = []
-    states = State.where(:country_id => 2)
+    
+    states = State.where(:country_id => 2).limit(1)
     states.each do |state|
       
       #soloautos
       @compare_state = CompareState.where(:state_id => state.id, :website_id => 1)
       makes = Make.where("id = ?",make_num)
-      puts make_num 
-      break
+      
       makes.each do |make|
         @compare_make = CompareMake.where(:make_id => make.id, :website_id => 1)
         
         models = Model.where(:make_id => make.id)
         models.each do |model|
+    
           @compare_model = CompareModel.where(:model_id => model.id, :website_id => 1)
           if !@compare_model.blank?
             @year = [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014]
             @year.each do |year|
               begin
-                soloautos(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?&marca=#{@compare_make[0].value}&modelo=#{@compare_model[0].value}&estado=#{@compare_state[0].value}&precio1=&precio2=&anio1=#{year}&anio2=#{year}&orden=4"),make.id,model.id,state.id,year)
-                @array.concat @soloautos
+                @results = true
+                @pages = 0       
+                @buscar_punto = true
+
+                while @results do
+                  #initialize variables
+                  @soloautos = []
+                  open(URI.encode("http://autos-usados.soloautos.com.mx/busqueda/autos/?&marca=#{@compare_make[0].value}&modelo=#{@compare_model[0].value}&estado=#{@compare_state[0].value}&precio1=&precio2=&anio1=#{year}&anio2=#{year}&orden=4&por_pagina=30&pagina=#{@pages*30}")){|f|
+                    if @buscar_punto
+                      f.each do |x|                
+                        if x.match(/<div class=\"left w600 ml10\">/)
+                          @start_position = f.pos - x.length
+                          @buscar_punto = false
+                          break
+                        end   
+                      end
+                    end
+                    puts "http://autos-usados.soloautos.com.mx/busqueda/autos/?&marca=#{@compare_make[0].value}&modelo=#{@compare_model[0].value}&estado=#{@compare_state[0].value}&precio1=&precio2=&anio1=#{year}&anio2=#{year}&orden=4&por_pagina=30&pagina=#{@pages*30}"
+                   
+                    f.seek(@start_position, IO::SEEK_SET) #go to specific line
+                    
+                    doc2 = Nokogiri::HTML(f)
+         
+                    #get total pages
+                    #@pages = (doc2.css("#nav:first > #numbers").length)
+
+                    #verify if return 0 results
+                    if doc2.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
+                      @results = false
+                      break
+                    end
+                    # f = Only the block of data
+                    soloautos(doc2,make.id,model.id,state.id,year) #Call function 
+                    puts @soloautos
+                    @array.concat @soloautos
+                    @pages = @pages + 1
+                  }
+                end                  
+                
               rescue OpenURI::HTTPError => exc
                 puts "ERROR: #{exc.message}"
               rescue Errno::ECONNREFUSED => exc
@@ -733,3 +768,4 @@ module Scraping
   
     module_function :get_autoplaza, :get_soloautos, :get_autocompro, :get_mercadolibre, :get_seminuevossonora
 end
+

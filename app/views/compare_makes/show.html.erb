@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Make:</strong>
+  <%= @compare_make.make_id %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @compare_make.website_id %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @compare_make.value %>
+</p>
+
+<%= link_to 'Edit', edit_compare_make_path(@compare_make) %> |
+<%= link_to 'Back', compare_makes_path %>

@@ -1,0 +1,60 @@
+<% 
+if params['controller'] == 'search'
+  form_id = 'search'
+  offset = ''
+else 
+  form_id = 'search2'
+  offset = 'large-3 columns small-offset-8'
+end 
+%>
+<div class="form-search  <%= form_id + ' '+ offset %> ">
+  <div class="columns sub-form">
+    <h4>Busca tu auto</h4>
+    <%= form_tag("/search", :method => "GET", :id => "#{form_id}", :class => "") do %>
+      
+      <%= select_tag "make", options_from_collection_for_select(marcas, "id", "name", params['make']), :class => "medium", :prompt => "Selecciona una marca" %>
+      
+      <%= select_tag "model", options_for_select([]), :class => "medium", :prompt => "Selecciona un modelo" %>   
+      
+      <%= select_tag "state", options_from_collection_for_select(states, "id","name", params['state']), :class => "medium", :prompt => "Selecciona un estado" %>
+      
+      <div class="large-6 columns" style="padding-left: 0px;">
+        <%= select_tag "price1", options_for_select(range, params['price1']), :class => "small", :prompt => "Precio minimo" %>
+      </div>
+      <div class="large-6 columns" style="padding-right: 0px;">
+        <%= select_tag "price2", options_for_select(range, params['price2']), :class => "small", :prompt => "Precio maximo" %>
+      </div>
+      
+      <div class="large-6 columns" style="padding-left: 0px;">
+        <%= select_tag "year1", options_for_select(range_year, params['year1']), :class => "small", :prompt => "Año minimo" %> 
+      </div>
+      <div class="large-6 columns" style="padding-right: 0px;">
+        <%= select_tag "year2", options_for_select(range_year, params['year2']), :class => "small", :prompt => "Año maximo" %>
+      </div>
+      <div class="small-6 columns" style="padding-right: 0px; float:right">
+        <%= submit_tag  "Buscar", :class => "button postfix" %>
+      </div>
+      
+      <div id="top-makes" class="small-12 columns" style="padding-right: 0px;float: left;padding-left: 0px;clear: both;">   
+        <div class="large-4">
+          <img src="http://www.easyicon.net/api/resize_png_new.php?id=511270&size=50" style="padding-left: 0px; margin-left: 0px; margin-right: 10px; cursor: pointer;" />
+        </div>
+        <div class="large-4" >
+          <img src="http://www.easyicon.net/api/resize_png_new.php?id=511330&amp;size=50" style="margin-left: 10px; cursor: pointer;" />
+        </div>
+        <div class="large-4">
+          <img src="http://www.easyicon.net/api/resize_png_new.php?id=511273&amp;size=50" style="float: right; cursor: pointer;" />
+        </div>
+        <div class="large-4">
+          <img src="http://www.easyicon.net/api/resize_png_new.php?id=511282&size=50" style="padding-left: 0px; margin-left: 0px; margin-right: 10px; margin-top: 10px; cursor: pointer;" />
+        </div>
+        <div class="large-4">
+          <img src="http://www.easyicon.net/api/resize_png_new.php?id=511289&size=50" style="margin-left: 10px;  margin-top: 10px; cursor: pointer;" />
+        </div>
+        <div class="large-4">
+          <img src="http://www.easyicon.net/api/resize_png_new.php?id=511290&size=50" style="float: right; margin-top: 10px; cursor: pointer;" />
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

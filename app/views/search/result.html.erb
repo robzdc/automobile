@@ -1,0 +1,30 @@
+<%= render "partials/header" %>
+
+<div class="container busqueda">
+  <div class="row large-10">
+    <div class="large-3 columns">
+      <%= render partial: "partials/form", locals: {marcas: @marcas, states: @states} %>
+      <div id="ad-form">
+       <img src="http://www.centreautocollision.com/images/right_car.jpg" />
+      </div>
+      
+    </div>
+    <div class="large-9 columns">
+      <div id="resultados">
+        <div class="panel small-11 right">Start searching</div>
+        <div class="row text-center loading"><img  src="/assets/359.gif" width="40" /></div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="small-12 columns">  
+  
+    
+   
+  </div>
+  
+</div>
+
+
+<%= render "partials/footer" %> 

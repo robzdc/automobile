@@ -1,0 +1,31 @@
+<h1>Listing compare_makes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Make</th>
+      <th>Website</th>
+      <th>Value</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @compare_makes.each do |compare_make| %>
+      <tr>
+        <td><%= compare_make.make_id %></td>
+        <td><%= compare_make.website_id %></td>
+        <td><%= compare_make.value %></td>
+        <td><%= link_to 'Show', compare_make %></td>
+        <td><%= link_to 'Edit', edit_compare_make_path(compare_make) %></td>
+        <td><%= link_to 'Destroy', compare_make, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Compare make', new_compare_make_path %>

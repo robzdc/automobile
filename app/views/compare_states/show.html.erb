@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>State:</strong>
+  <%= @compare_state.state_id %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @compare_state.website_id %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @compare_state.value %>
+</p>
+
+<%= link_to 'Edit', edit_compare_state_path(@compare_state) %> |
+<%= link_to 'Back', compare_states_path %>

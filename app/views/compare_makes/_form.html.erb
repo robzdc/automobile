@@ -1,0 +1,29 @@
+<%= form_for(@compare_make) do |f| %>
+  <% if @compare_make.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@compare_make.errors.count, "error") %> prohibited this compare_make from being saved:</h2>
+
+      <ul>
+      <% @compare_make.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :make_id %><br>
+    <%= f.number_field :make_id %>
+  </div>
+  <div class="field">
+    <%= f.label :website_id %><br>
+    <%= f.number_field :website_id %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br>
+    <%= f.text_field :value %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

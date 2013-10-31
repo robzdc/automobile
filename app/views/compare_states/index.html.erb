@@ -1,0 +1,31 @@
+<h1>Listing compare_states</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>State</th>
+      <th>Website</th>
+      <th>Value</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @compare_states.each do |compare_state| %>
+      <tr>
+        <td><%= compare_state.state_id %></td>
+        <td><%= compare_state.website_id %></td>
+        <td><%= compare_state.value %></td>
+        <td><%= link_to 'Show', compare_state %></td>
+        <td><%= link_to 'Edit', edit_compare_state_path(compare_state) %></td>
+        <td><%= link_to 'Destroy', compare_state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Compare state', new_compare_state_path %>

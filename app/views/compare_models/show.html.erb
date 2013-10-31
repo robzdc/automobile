@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @compare_model.model_id %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @compare_model.website_id %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @compare_model.value %>
+</p>
+
+<%= link_to 'Edit', edit_compare_model_path(@compare_model) %> |
+<%= link_to 'Back', compare_models_path %>

@@ -1,0 +1,31 @@
+
+<% if !@results.blank? %>
+	<% @results.each do |data| %>		
+		<div class="media small-11 right columns">
+      
+      <div class="large-3 columns">
+  		  <a class="pull-left" href="<%= data.url %>" ><img align="left" class="img-polaroid" src="<%= raw data.image %>" width="120" /></a>
+      </div>
+      <div class="media-body large-9 columns">
+        <h3 class="media-heading"><a target="_blank" href="<%= data.url %>"><%= data.title %></a></h3>
+        <div><%= number_to_currency(data.price,:unit => "$") %></div>
+        <div><%=  data.location %></div>
+        <div><%=  data.phone %></div>
+        <div><%=  data.comment %></div>
+        <div><%=  data.color %></div>
+        <div><%=  data.km %></div>
+        <div class="offset3">
+          <a class="btn btn-mini" href="https://twitter.com/share?url=<%= data.url %>" target="_blank" ><i class="icon-twitter"></i> Tweet</a>
+          <a class="btn btn-mini" href="http://www.facebook.com/share.php?u=<%= data.url %>" target="_blank"><i class="icon-facebook"></i> Share</a>     
+        </div>
+      </div>
+		</div>
+  <% end %>
+	<div class="small-11 small-offset-1">
+    <button data-make="<%= @marca %>" data-min="<%= @price1 %>" data-max="<%= @price2 %>" data-state="<%= @state %>" id="more" class="btn btn-block" value="1" type="button">More</button>
+  </div>
+<% else %>
+		<div class="panel small-11 right">
+      No Results...
+    </div>
+<% end %>

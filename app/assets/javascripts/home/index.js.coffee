@@ -21,3 +21,15 @@ $ ->
 	
 
      false
+
+
+  $(document).foundation "orbit",
+    pause_on_hover: true
+    animation: 'fade'
+    navigation_arrows: true
+    slide_number: false
+    bullets: false
+    timer_speed: 5000
+
+  $(".orbit-slides-container").mouseout ->
+    $(".orbit-timer").click()

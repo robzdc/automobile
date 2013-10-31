@@ -22,10 +22,18 @@
 #map{
  width:100%; 
  height:600px; 
+ overflow: hidden;
 }
 
 #map img{
   max-width:none;
+}
+
+#featured img {
+     margin: 0 auto;
+     position: relative;
+     display: block;
+     max-height: 600px;
 }
 
 .big-map{

@@ -1341,6 +1341,9 @@ nav.top-bar ul li a{
   background-color: #E0E4CC;
 }
 
+h1{
+  line-height: 35px;
+}
 
 h3{
   color:#333;
@@ -1379,4 +1382,12 @@ h3{
     -o-user-select: none;
     user-select: none;
   }
+}
+
+.orbit-slides-container{
+  max-height: 600px;
+}
+
+.orbit-container .orbit-timer{
+  display:none !important;
 }

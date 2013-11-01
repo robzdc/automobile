@@ -24,6 +24,12 @@ gem 'mysql2'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
+# Use Nokogiri
+gem 'nokogiri'
+
+# Use active_records for session
+gem 'activerecord-session_store'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 

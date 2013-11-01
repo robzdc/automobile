@@ -10,8 +10,8 @@ development:
   database: automobile_dev
   pool: 5
   username: "root"
-  password: "1"
-  socket: /var/run/mysqld/mysqld.sock
+  password: "5n3ll1975"
+  socket: /run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,8 +23,8 @@ test:
   database: automobile_test
   pool: 5
   username: "root"
-  password: "1"
-  socket: /var/run/mysqld/mysqld.sock
+  password: "5n3ll1975"
+  socket: /run/mysqld/mysqld.sock
 
 production:
   adapter: mysql2

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903035531) do
+ActiveRecord::Schema.define(version: 20131031144705) do
 
   create_table "adverts", force: true do |t|
     t.string   "image"
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 20130903035531) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "compare_makes", ["make_id"], name: "idx_make_id", using: :btree
+  add_index "compare_makes", ["website_id"], name: "idx_website_id", using: :btree
+
   create_table "compare_models", force: true do |t|
     t.integer  "model_id"
     t.integer  "website_id"
@@ -54,6 +57,9 @@ ActiveRecord::Schema.define(version: 20130903035531) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "compare_models", ["model_id"], name: "idx_model", using: :btree
+  add_index "compare_models", ["website_id"], name: "idx_website", using: :btree
+
   create_table "compare_states", force: true do |t|
     t.integer  "state_id"
     t.integer  "website_id"
@@ -61,6 +67,9 @@ ActiveRecord::Schema.define(version: 20130903035531) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "compare_states", ["state_id"], name: "idx_state", using: :btree
+  add_index "compare_states", ["website_id"], name: "idx_website", using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "name"
@@ -101,11 +110,11 @@ ActiveRecord::Schema.define(version: 20130903035531) do
   create_table "sessions", force: true do |t|
     t.string   "session_id",                    null: false
     t.text     "data",       limit: 2147483647
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "states", force: true do |t|

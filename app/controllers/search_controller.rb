@@ -35,7 +35,7 @@ class SearchController < ApplicationController
     params[:price1] ||= ""
     params[:price2] ||= ""
    
-    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").all
+    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}")
     
     #sort data by price
     @results = @results.sort_by {|precio|  

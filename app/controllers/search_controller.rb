@@ -35,7 +35,7 @@ class SearchController < ApplicationController
     params[:price1] ||= ""
     params[:price2] ||= ""
 
-    @limit = 2
+    @limit = 20
 
     @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price DESC").limit(@limit)
     
@@ -105,10 +105,28 @@ class SearchController < ApplicationController
 
   def more   
     num = params[:num]
-    @limit = 2
+    if !params[:make].blank?
+      @marca = params[:make]
+    end
+    if !params[:model].blank?
+      @modelo = params[:model]
+    end
+    if !params[:state].blank?
+      @state = params[:state]
+    end
+    
+    @modelo ||= ""
+    @marca ||= ""
+    @state ||= ""
+    params[:year1] ||= ""
+    params[:year2] ||= ""
+    params[:price1] ||= ""
+    params[:price2] ||= ""
+
+    @limit = 20
     @init = num.to_i*@limit
     @end = @init+@limit
-    
+
     @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price DESC").limit(@limit).offset("#{@init}")
     #@results = @results[@init..@end]
     

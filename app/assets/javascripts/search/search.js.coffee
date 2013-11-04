@@ -11,6 +11,7 @@ $ ->
       $(".loading").remove()
       num = parseInt(page)
       make = $(this).attr "data-make"
+      model = $(this).attr "data-model"
       state = $(this).attr "data-state"
       price1 = $(this).attr "data-min"
       price2 = $(this).attr "data-max"
@@ -18,6 +19,10 @@ $ ->
       $(this).parent().remove()
       $.get "/search/more",
         num: num
+        make: make
+        state: state
+        price1: price1
+        price2: price2
       , (data) ->
       	
         $("#resultados").append(data).fadeIn 1000 

@@ -450,7 +450,7 @@ module Scraping
   #Obtener anuncios de paginas y guardarlas en la base de datos
   def get_soloautos 
     
-    states = State.where(:country_id => 2, :id => 14)
+    states = State.where(:country_id => 2)
     states.each do |state|
       @array = []
       #soloautos
@@ -553,7 +553,7 @@ module Scraping
   def get_autoplaza
     
     ActiveRecord::Base.connection.reconnect!
-    states = State.where(:country_id => 2, :id => 14)
+    states = State.where(:country_id => 2)
     states.each do |state| 
       @array = []
       #autoplaza
@@ -631,7 +631,7 @@ module Scraping
     
   def get_autocompro
     
-    states = State.where(:country_id => 2, :id => 14)
+    states = State.where(:country_id => 2)
     states.each do |state|
       @array = []
       #autocompro

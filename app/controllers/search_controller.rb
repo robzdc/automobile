@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-  	@marcas_form = Make.all(:order => 'name')
+  	@marcas_form = Make.all.order("name")
     @states_form = State.where("country_id = ?",2)
     make_id = params[:make]
     @models_form = Model.where("make_id = ?",make_id).order("name")

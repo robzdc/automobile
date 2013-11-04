@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   #on click more results
+  moreResults(0)
 	moreResults = (num) -> 
     $("#more").click (e) ->
     	
@@ -22,7 +23,8 @@ $ ->
         $("#more").val parseInt(page) + 1
         moreResults(num)
         
-  # on click search /search      
+  # on click search /search  
+  ###    
   $("form#search").submit ->
   	
     $("#resultados .well").remove()
@@ -31,13 +33,14 @@ $ ->
     datos = $(this).serialize()
     $.get "/search/result", datos, (data) ->
     	
-      location.hash = "?" + datos
+      location.search = "?" + datos
       $(".loading").hide()
       $("#resultados").append(data).fadeIn 1000 
       moreResults(0)
 
     false
-    
+  
+  ### 
   #get parameters from URL
   getParameter = (paramName) ->
     searchString = window.location.hash.substring 2
@@ -52,6 +55,7 @@ $ ->
     null
   
   #on load search send json
+  ###
   make = getParameter("make")
   model = getParameter("model")
   state = getParameter("state")
@@ -91,7 +95,7 @@ $ ->
     
     false
     
-    
+  ###  
 	#Get model list by make
 	$("#make").change ->
 		

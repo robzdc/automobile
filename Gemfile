@@ -21,6 +21,9 @@ gem 'zurb-foundation'
 # Use MySQL
 gem 'mysql2'
 
+# Use yaml for database dump and restore
+gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 

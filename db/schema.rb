@@ -46,9 +46,6 @@ ActiveRecord::Schema.define(version: 20131031144705) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "compare_makes", ["make_id"], name: "idx_make_id", using: :btree
-  add_index "compare_makes", ["website_id"], name: "idx_website_id", using: :btree
-
   create_table "compare_models", force: true do |t|
     t.integer  "model_id"
     t.integer  "website_id"
@@ -57,9 +54,6 @@ ActiveRecord::Schema.define(version: 20131031144705) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "compare_models", ["model_id"], name: "idx_model", using: :btree
-  add_index "compare_models", ["website_id"], name: "idx_website", using: :btree
-
   create_table "compare_states", force: true do |t|
     t.integer  "state_id"
     t.integer  "website_id"
@@ -67,9 +61,6 @@ ActiveRecord::Schema.define(version: 20131031144705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  add_index "compare_states", ["state_id"], name: "idx_state", using: :btree
-  add_index "compare_states", ["website_id"], name: "idx_website", using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "name"

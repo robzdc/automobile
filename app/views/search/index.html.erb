@@ -3,7 +3,7 @@
 <div class="container busqueda">
   <div class="row large-10">
     <div class="large-3 columns">
-      <%= render partial: "partials/form", locals: {marcas: @marcas, states: @states} %>
+      <%= render partial: "partials/form", locals: {marcas: @marcas_form, states: @states_form, modelos: @models_form} %>
       <div id="ad-form">
        <img src="http://www.centreautocollision.com/images/right_car.jpg" />
       </div>
@@ -11,7 +11,37 @@
     </div>
     <div class="large-9 columns">
       <div id="resultados">
-        <div class="panel small-11 right">Start searching</div>
+        <!--<div class="panel small-11 right">Start searching</div>-->
+        <% if !@results.blank? %>
+          <% @results.each do |data| %>   
+            <div class="media large-11 right columns">
+              
+              <div class="large-3 columns">
+                <a class="pull-left" href="<%= data.url %>" ><img align="left" class="img-polaroid" src="<%= raw data.image %>" width="120" /></a>
+              </div>
+              <div class="media-body large-9 columns">
+                <h3 class="media-heading"><a target="_blank" href="<%= data.url %>"><%= data.title %></a></h3>
+                <div><%= number_to_currency(data.price,:unit => "$") %></div>
+                <div><%=  data.location %></div>
+                <div><%=  data.phone %></div>
+                <div><%=  data.comment %></div>
+                <div><%=  data.color %></div>
+                <div><%=  data.km %></div>
+                <div class="offset3">
+                  <a class="btn btn-mini" href="https://twitter.com/share?url=<%= data.url %>" target="_blank" ><i class="icon-twitter"></i> Tweet</a>
+                  <a class="btn btn-mini" href="http://www.facebook.com/share.php?u=<%= data.url %>" target="_blank"><i class="icon-facebook"></i> Share</a>     
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <div class="large-11 right columns">
+            <button data-make="<%= @marca %>" data-min="<%= @price1 %>" data-max="<%= @price2 %>" data-state="<%= @state %>" id="more" class="btn btn-block right" value="1" type="button">More</button>
+          </div>
+        <% else %>
+            <div class="panel large-11 right">
+              No Results...
+            </div>
+        <% end %>
         <div class="row text-center loading"><img  src="/assets/359.gif" width="40" /></div>
       </div>
     </div>

@@ -7,6 +7,9 @@
   background-color:#A7DBD8; 
   padding: 20px;
   margin-top: 13px; margin-bottom: 13px;
+  &:first-child{
+    margin-top:0px
+  }
 }
 .media:nth-child(even){ 
   background-color:#95c3c1; 

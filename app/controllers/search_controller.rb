@@ -34,8 +34,10 @@ class SearchController < ApplicationController
     params[:year2] ||= ""
     params[:price1] ||= ""
     params[:price2] ||= ""
-   
-    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price").limit(10)
+
+    @limit = 2
+
+    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price DESC").limit(@limit)
     
     #sort data by price
     #@results = @results.sort_by {|precio|  
@@ -103,10 +105,11 @@ class SearchController < ApplicationController
 
   def more   
     num = params[:num]
+    @limit = 2
+    @init = num.to_i*@limit
+    @end = @init+@limit
     
-    @init = num.to_i*10
-    @end = @init+10
-    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price").limit("#{@init}").offset("#{@end}")
+    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price DESC").limit(@limit).offset("#{@init}")
     #@results = @results[@init..@end]
     
     respond_to do |format|

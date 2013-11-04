@@ -8,13 +8,14 @@ $ ->
     $("#more").click (e) ->
     	
       page = $(this).val()
-      num = parseInt(page)+num
+      $(".loading").remove()
+      num = parseInt(page)
       make = $(this).attr "data-make"
       state = $(this).attr "data-state"
       price1 = $(this).attr "data-min"
       price2 = $(this).attr "data-max"
       that = $(this)
-      $(this).remove()
+      $(this).parent().remove()
       $.get "/search/more",
         num: num
       , (data) ->

@@ -35,18 +35,18 @@ class SearchController < ApplicationController
     params[:price1] ||= ""
     params[:price2] ||= ""
    
-    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}")
+    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price").limit(10)
     
     #sort data by price
-    @results = @results.sort_by {|precio|  
-      precio.price
-    }.reverse
+    #@results = @results.sort_by {|precio|  
+    #  precio.price
+    #}.reverse
     
     #remove duplicates
-    @results = @results.uniq{|x|[x['title'],x['price'],x['km'],x['comment']]}
+    @results = @results.uniq{|x|[x['url'],x['price'],x['km'],x['comment']]}
     
-    session[:results] = @results
-    @results = @results[0..9]
+    #session[:results] = @results
+    #@results = @results[0..9]
   end
 
 =begin
@@ -106,8 +106,8 @@ class SearchController < ApplicationController
     
     @init = num.to_i*10
     @end = @init+10
-    @results = session[:results]
-    @results = @results[@init..@end]
+    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price").limit("#{@init}").offset("#{@end}")
+    #@results = @results[@init..@end]
     
     respond_to do |format|
       format.html { render :partial => 'partials/results' } # index.html.erb

@@ -36,6 +36,7 @@ gem 'activerecord-session_store'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+gem "net-ssh", "~> 2.7.0"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 

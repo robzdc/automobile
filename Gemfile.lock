@@ -184,6 +184,7 @@ DEPENDENCIES
   jquery-rails
   mailcatcher
   mysql2
+  net-ssh (~> 2.7.0)
   nokogiri
   quiet_assets
   rails (= 4.0.0)

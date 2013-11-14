@@ -7,7 +7,10 @@ class SearchControllerTest < ActionController::TestCase
   end
 
   test "should get getmodels" do
-    get :getmodels
+  	@request.env['HTTP_ACCEPT'] = "application/json"
+    get :getmodels, get: {make_id: 1}
+    
+    assert :getmodels, "Got models"
     assert_response :success
   end
 

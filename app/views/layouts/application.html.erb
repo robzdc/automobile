@@ -16,16 +16,19 @@
 
   	<title><%= content_for?(:title) ? yield(:title) : "Autopy.com" %></title>
 
-  	<%= stylesheet_link_tag    "application" %>
+    <%= stylesheet_link_tag    "application" %>
+  	<%= stylesheet_link_tag    controller_name %>
   	<%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
   </head>
 
   <body>
-
+    <%= render "partials/header" %>
     <%= yield %>
-
+    <%= render "partials/footer" %> 
     
     <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag controller_name %>
+    
   </body>
 </html>

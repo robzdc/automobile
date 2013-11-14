@@ -25,6 +25,8 @@ Automobile4::Application.routes.draw do
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
+  get "/contacto" => "contacto#index"
+  post "/contacto" => "contacto#contacto_email"
   get "/search/" => "search#index"
   get "/search/more" => "search#more"
   get "/search/getmodels" => "search#getmodels"

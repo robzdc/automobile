@@ -13,9 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require turbolinks
 //= require index
-//= require search
-//= require_tree .
 
-$(function(){ $(document).foundation(); });
+
+$( document ).ready(function(){
+	$(document).foundation();
+});

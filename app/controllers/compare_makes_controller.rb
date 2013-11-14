@@ -4,7 +4,7 @@ class CompareMakesController < ApplicationController
   # GET /compare_makes
   # GET /compare_makes.json
   def index
-    @compare_makes = CompareMake.all(:order => "make_id")
+    @compare_makes = CompareMake.order("make_id")
   end
 
   # GET /compare_makes/1

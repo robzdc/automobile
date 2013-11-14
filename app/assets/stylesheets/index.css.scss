@@ -4,7 +4,8 @@
 @import "partials/header";
 
 .after-map{
- max-width: 100%; background-color: #E5E7DA; position:relative 
+ max-width: 100%; background-color: #E5E7DA; position:relative;
+ padding-bottom: 25px
 }
 
 .container .large-12.advert-row{
@@ -33,7 +34,7 @@
      margin: 0 auto;
      position: relative;
      display: block;
-     max-height: 600px;
+     max-height: 600px; min-height: 600px;
 }
 
 .big-map{
@@ -56,6 +57,16 @@
 
 .form-search{
   margin-top: 70px;
+}
+
+.third-row{
+  background: #262626;
+  padding: 20px;
+}
+
+.third-row div{
+  margin: auto;
+  color: #999999;
 }
 
 @import "partials/form";

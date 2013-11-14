@@ -1,0 +1,21 @@
+// Place all the styles related to the Contacto controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.container.contacto{
+	background: #262626;
+  padding: 20px;
+  color: #fff;
+}
+
+.contacto form label{
+	color: #fff;
+}
+
+.contacto h3{
+	color: #999;
+}
+
+#contacto_message{
+	height: 10em;
+}

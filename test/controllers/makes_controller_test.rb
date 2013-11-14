@@ -20,7 +20,7 @@ class MakesControllerTest < ActionController::TestCase
     assert_difference('Make.count') do
       post :create, make: { name: @make.name }
     end
-
+    
     assert_redirected_to make_path(assigns(:make))
   end
 

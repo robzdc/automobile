@@ -4,7 +4,7 @@ class CompareStatesController < ApplicationController
   # GET /compare_states
   # GET /compare_states.json
   def index
-    @compare_states = CompareState.all(:order => "state_id")
+    @compare_states = CompareState.order("state_id")
   end
 
   # GET /compare_states/1

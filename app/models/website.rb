@@ -1,3 +1,3 @@
 class Website < ActiveRecord::Base
-	has_and_belongs_to_many :makes
+	has_many :compare_makes
 end

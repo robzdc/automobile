@@ -4,7 +4,7 @@ class ModelsController < ApplicationController
   # GET /models
   # GET /models.json
   def index
-    @models = Model.all(:order => "make_id")
+    @models = Model.order("make_id")
   end
 
   # GET /models/1
@@ -16,7 +16,7 @@ class ModelsController < ApplicationController
   def new
     @model = Model.new
 
-    @makes = Make.all(:order => "name")
+    @makes = Make.order("name")
   end
 
   # GET /models/1/edit

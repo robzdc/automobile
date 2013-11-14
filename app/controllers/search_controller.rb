@@ -36,8 +36,10 @@ class SearchController < ApplicationController
     params[:price2] ||= ""
 
     @limit = 20
+    @init = num.to_i*@limit
+    @end = @init+@limit
 
-    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price DESC").limit(@limit)
+    @results = Advert.search_make("#{@marca}").search_model("#{@modelo}").search_state("#{@state}").search_year("#{params[:year1]}","#{params[:year2]}").search_price("#{params[:price1]}","#{params[:price2]}").order("price DESC").limit(@limit).offset("#{@init}")
     
     #sort data by price
     #@results = @results.sort_by {|precio|  

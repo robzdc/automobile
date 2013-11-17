@@ -490,7 +490,7 @@ module Scraping
                     end                   
                     f.seek(@start_position, IO::SEEK_SET) #go to specific line
                     
-                    doc2 = Nokogiri::HTML(f)
+                    doc2 = Nokogiri::HTML(f, nil, 'utf-8')
         
                     #verify if return 0 results
                     if doc2.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
@@ -553,7 +553,7 @@ module Scraping
   def get_autoplaza
     
     ActiveRecord::Base.connection.reconnect!
-    states = State.where(:country_id => 2)
+    states = State.where(:country_id => 2, :id => 16)
     states.each do |state| 
       @array = []
       #autoplaza
@@ -585,7 +585,7 @@ module Scraping
                   end
                   f.seek(@start_position, IO::SEEK_SET) #go to specific line
                     
-                  doc2 = Nokogiri::HTML(f)
+                  doc2 = Nokogiri::HTML(f, nil, 'utf-8')
                   
                   autoplaza(doc2,make.id,model.id,state.id,year)
                   @array.concat @autoplaza
@@ -667,7 +667,7 @@ module Scraping
                   unless @buscar_punto
                     f.seek(@start_position, IO::SEEK_SET) #go to specific line
                       
-                    doc2 = Nokogiri::HTML(f)
+                    doc2 = Nokogiri::HTML(f, nil, 'utf-8')
                     
                     autocompro(doc2,make.id,model.id,state.id,year) 
                     @array.concat @autocompro
@@ -752,7 +752,7 @@ module Scraping
                     unless @start_position.blank?
                       f.seek(@start_position, IO::SEEK_SET) #go to specific line
                       
-                      doc2 = Nokogiri::HTML(f)   
+                      doc2 = Nokogiri::HTML(f, nil, 'utf-8')   
                       
                       if doc2.search('#searchResults li').length == 0
                         @encontro_datos = false
@@ -847,7 +847,7 @@ module Scraping
 
                   unless @start_position.blank?
                     f.seek(@start_position, IO::SEEK_SET) #go to specific line
-                    doc2 = Nokogiri::HTML(f)   
+                    doc2 = Nokogiri::HTML(f, nil, 'utf-8')   
                     
                     if doc2.search('.view-content').length == 0
                       

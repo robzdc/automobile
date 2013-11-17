@@ -20,6 +20,7 @@ $ ->
       $.get "/search/more",
         num: num
         make: make
+        model: model
         state: state
         price1: price1
         price2: price2

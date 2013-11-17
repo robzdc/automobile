@@ -36,6 +36,9 @@ gem 'activerecord-session_store'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+# Use Devise
+gem 'devise'
+
 gem "net-ssh", "~> 2.7.0"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -44,10 +47,13 @@ gem 'turbolinks'
 #gem "capistrano", "~> 3.0.1"
 
 # Quit assets from logs
-gem 'quiet_assets'
+gem 'quiet_assets', group: :developmentma
 
 # Use mailcatcher for development 
-gem 'mailcatcher'
+gem 'mailcatcher', group: :development
+
+# Use meta-tags
+gem 'meta-tags', :require => 'meta_tags'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'

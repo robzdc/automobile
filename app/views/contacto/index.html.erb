@@ -1,3 +1,8 @@
+<%
+  set_meta_tags :title => 'Contáctanos',
+                :description => 'Buscar, compra y vende autos de manera mas fácil',
+                :keywords => 'autos seminuevos, autos usados, seminuevos mexico, seminuevos'
+%>
 <div class="container contacto">
 	<div class="row large-10">
 		<!-- Contact Details -->
@@ -10,7 +15,7 @@
       <div class="section-container" data-section>
 	        <section class="section">
 	          
-	            <%= form_tag("/contacto", method: "post") do %>
+	            <%= form_tag("/contacto/send", method: "post") do %>
 	              <div class="row collapse">
 	                <div class="large-2 columns">
 	                  <label class="inline">Nombre</label>

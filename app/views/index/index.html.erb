@@ -1,3 +1,8 @@
+<%
+  set_meta_tags :title => 'Busca, compra y vende autos mas fácil',
+                :description => 'Buscar, compra y vende autos de manera mas fácil',
+                :keywords => 'autos seminuevos, autos usados, seminuevos mexico, seminuevos'
+%>
 <!-- Map -->
 <div class="row big-map">
   <div id="map">
@@ -25,19 +30,67 @@
   
   <div class="large-12 advert-row">
     <div class="small-3 columns">
-      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% if Rails.env == "production" %>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Homepage - 1st -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:250px;height:250px"
+             data-ad-client="ca-pub-3810811841708456"
+             data-ad-slot="9170037394"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      <% else %>
+        <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% end %>
     </div>
     
     <div class="small-3 columns">
-      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% if Rails.env == "production" %>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Homepage - 2nd -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:250px;height:250px"
+             data-ad-client="ca-pub-3810811841708456"
+             data-ad-slot="6213873397"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      <% else %>
+        <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% end %>
     </div>
     
     <div class="small-3 columns">
-      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% if Rails.env == "production" %>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Homepage - 3th -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:250px;height:250px"
+             data-ad-client="ca-pub-3810811841708456"
+             data-ad-slot="7690606595"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      <% else %>
+        <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% end %>
     </div>
     
     <div class="small-3 columns">
-      <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% if Rails.env == "production" %>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Homepage - 4th -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:250px;height:250px"
+             data-ad-client="ca-pub-3810811841708456"
+             data-ad-slot="8890835797"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      <% else %>
+        <img src="http://placehold.it/250x250/A7DBD8/&text=Ads">
+      <% end %>
     </div>
   </div>
   

@@ -1,5 +1,5 @@
 Automobile4::Application.routes.draw do
-  get "search/index"
+  
   resources :compare_models
 
   resources :models
@@ -16,7 +16,9 @@ Automobile4::Application.routes.draw do
 
   resources :makes
 
-  get "index/index"
+  get "index/index" => redirect('/')
+  get "search/index" => redirect('/search')
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -26,7 +28,8 @@ Automobile4::Application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get "/contacto" => "contacto#index"
-  post "/contacto" => "contacto#contacto_email"
+  post "/contacto/send" => "contacto#contacto_email"
+  get "/contacto/success" => "contacto#email_success"
   get "/search/" => "search#index"
   get "/search/more" => "search#more"
   get "/search/getmodels" => "search#getmodels"

@@ -14,7 +14,8 @@
   	<!-- Set the viewport width to device width for mobile -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  	<title><%= content_for?(:title) ? yield(:title) : "Autopy.com" %></title>
+  	<!--<title><%# content_for?(:title) ? yield(:title) : "Autopy.com" %></title>-->
+    <%= display_meta_tags :site => 'Autopy' %>
 
     <%= stylesheet_link_tag    "application" %>
   	<%= stylesheet_link_tag    controller_name %>
@@ -23,6 +24,12 @@
   </head>
 
   <body>
+    <% if flash[:error] -%>
+      <p class='error'><%=h flash[:error] %></p>
+    <% end -%>
+    <% if flash[:notice] -%>
+      <p class='notice'><%=h flash[:notice] %></p>
+    <% end -%>
     <%= render "partials/header" %>
     <%= yield %>
     <%= render "partials/footer" %> 

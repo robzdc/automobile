@@ -32,7 +32,7 @@ set_meta_tags :title => 'Busca miles de autos seminuevos',
             <div class="media large-11 right columns">
               
               <div class="large-3 columns">
-                <a class="pull-left" href="<%= data.url %>" ><img align="left" class="img-polaroid" src="<%= raw data.image %>" width="120" /></a>
+                <a class="pull-left" href="<%= data.url %>" target="_blank"><img align="left" class="img-polaroid" src="<%= raw data.image %>" width="120" /></a>
               </div>
               <div class="media-body large-9 columns">
                 <h3 class="media-heading"><a target="_blank" href="<%= data.url %>"><%= data.title %></a></h3>
@@ -43,8 +43,8 @@ set_meta_tags :title => 'Busca miles de autos seminuevos',
                 <div><%=  data.color %></div>
                 <div><%=  data.km %></div>
                 <div class="offset3">
-                  <a class="btn btn-mini" href="https://twitter.com/share?url=<%= data.url %>" target="_blank" ><i class="icon-twitter"></i> Tweet</a>
-                  <a class="btn btn-mini" href="http://www.facebook.com/share.php?u=<%= data.url %>" target="_blank"><i class="icon-facebook"></i> Share</a>     
+                  <a class="btn btn-mini" href="https://twitter.com/share?url=<%= data.url %>" target="_blank" ><i class="social foundicon-twitter" alt="Tweet"></i></a>
+                  <a class="btn btn-mini" href="http://www.facebook.com/share.php?u=<%= data.url %>" target="_blank"><i class="social foundicon-facebook" alt="Share"></i></a>     
                 </div>
               </div>
             </div>

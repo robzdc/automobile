@@ -1,5 +1,6 @@
 Automobile4::Application.routes.draw do
   
+  devise_for :users
   resources :compare_models
 
   resources :models

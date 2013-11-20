@@ -1,5 +1,6 @@
 class CompareMakesController < ApplicationController
   before_action :set_compare_make, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /compare_makes
   # GET /compare_makes.json

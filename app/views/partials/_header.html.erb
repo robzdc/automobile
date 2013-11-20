@@ -3,10 +3,19 @@
     <ul class="title-area">
       <!-- Title Area -->
       <li class="name">
-          <%= link_to image_tag("autopy.png", :width=>200), root_path %>
+          <%= link_to image_tag("autobuscalo.png", :width=> 310, :alt => "autobuscalo"), root_path %>
       </li>
       <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
     </ul>
+
+    <div class="right">
+      <% if user_signed_in? %>
+        <strong><%= current_user.email %></strong>.
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+      <% end %>
+    </div>
+
   </div>
 </nav>
 

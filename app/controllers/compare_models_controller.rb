@@ -1,5 +1,6 @@
 class CompareModelsController < ApplicationController
   before_action :set_compare_model, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /compare_models
   # GET /compare_models.json

@@ -1,5 +1,6 @@
 class CompareStatesController < ApplicationController
   before_action :set_compare_state, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /compare_states
   # GET /compare_states.json

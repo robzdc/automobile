@@ -1,20 +1,20 @@
 <%
   set_meta_tags :title => 'Busca, compra y vende autos mas fácil',
                 :description => 'Buscar, compra y vende autos de manera mas fácil',
-                :keywords => 'autos seminuevos, autos usados, seminuevos mexico, seminuevos'
+                :keywords => 'autos seminuevos, autos usados, seminuevos mexico, seminuevos, autos'
 %>
 <!-- Map -->
 <div class="row big-map">
   <div id="map">
   	<div id="featured" data-orbit>
 	  <div>
-	    <img src="http://www.cmdl.com.hk/images/en/home-banner-130422.jpg" />
+	    <img src="http://placehold.it/1100x600/A7DBD8/&text=Anúnciate .1">
 	  </div>
 	  <div>
-	    <img src="http://revimedia.com/offers/wp-content/uploads/2010/09/1-page-v2-LIGHTER-button1.jpg" />
+	    <img src="http://placehold.it/1100x600/A7DBD8/&text=Anúnciate .2">
 	  </div>
 	  <div>
-	    <img src="http://ww1.prweb.com/prfiles/2013/06/30/11081327/Diminished%20Value%20of%20Georgia%20Loss%20in%20Value%20Banner.jpg" />
+	    <img src="http://placehold.it/1100x600/A7DBD8/&text=Anúnciate .3">
 	  </div>
 	</div>
   </div>
@@ -99,22 +99,21 @@
 
 <div class="row third-row">
   <div class="large-10">
-      <section>
+      <section class="columns">
         <div class="large-5 columns">
           <h1>Busca y encuentra</h1>
           <p>
-            En <b>autopy.com</b> te facilitamos la busqueda de ese auto que quieres estrenar.<br />
+            En <b>autobúscalo.com</b> te facilitamos la busqueda de ese auto que quieres estrenar.<br />
             Busca miles de anuncios en México en una sola pagina.
           </p>
         </div>
         <div class="large-5 columns">
-          <h1>Próximamente</h1>
-          <p>
-            <ul>
-              <li>Encuentra el mejor seguro para tu auto.</li>
-              <li>Encuentra el mejor lugar para rentar un auto en México.</li>
-            </ul>
-          </p>
+          <h1>Seminuevos</h1>
+          <ul class="small-block-grid-2 large-block-grid-3">
+            <% @random.each do |random| %>
+              <li><%= link_to image_tag(random[1], :width => 150), random[2], :class => "th" %></li>
+            <% end %>
+          </ul>
         </div>
       </section>
     </div>

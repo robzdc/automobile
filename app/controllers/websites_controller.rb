@@ -1,5 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /websites
   # GET /websites.json

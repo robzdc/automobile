@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require foundation
 //= require index
+//= require search
 
 
 $( document ).ready(function(){

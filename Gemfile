@@ -33,6 +33,9 @@ gem 'nokogiri'
 # Use active_records for session
 gem 'activerecord-session_store'
 
+# Cron Job
+gem 'whenever', :require => false
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 

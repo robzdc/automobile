@@ -13,6 +13,7 @@
  *= require foundation_and_overrides
  *= require ./foundation/social_foundicons
  *= require_tree ./partials
+ *= require_tree .
  */
 
 @import url(http://fonts.googleapis.com/css?family=Lato);

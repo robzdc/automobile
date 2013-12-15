@@ -5,16 +5,25 @@ class SearchController < ApplicationController
     make_id = params[:make]
     @models_form = Model.where("make_id = ?",make_id).order("name")
 
+    @title = []
     if !params[:make].blank?
       @marca = params[:make]
+      @marca_name = Make.where("id = ?",@marca).pluck(:name)
+      @title << @marca_name[0]
     end
     if !params[:model].blank?
       @modelo = params[:model]
+      @modelo_name = Model.where("id = ?",@modelo).pluck(:name)
+      @title << @modelo_name[0]
     end
     if !params[:state].blank?
       @state = params[:state]
+      @state_name = State.where("id = ?",@state).pluck(:name)
+      @title << @state_name[0]
     end
     
+    @title ||= "Busca, compra y vende seminuevos mas fácil"
+
     @modelo ||= ""
     @marca ||= ""
     @state ||= ""

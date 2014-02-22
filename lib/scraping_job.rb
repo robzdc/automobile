@@ -5,30 +5,6 @@ module Scraping
 
   # soloautos.com
   def self.soloautos(site,make,model,state,year1)
-    #res = Net::HTTP.get_response(URI.parse(site))
-    
-    #if res.code != 200
-    #  @error500 = true
-    #end
-    
-    #doc2 = Nokogiri::HTML(site)
-    
-    #@noresults = false
-    #initialize variables
-    #@soloautos = []
-    
-    #get total pages
-    #@pages = (doc2.css("#nav:first > #numbers").length)
-    
-    #verify if return 0 results
-    #if doc2.css(".left.w560.lh130.mt10.gray.br10.b.t13.tc.pd10.gris-obscuro").length > 0
-    #  @noresults = true
-    #end
-    
-    #if !@noresults
-      #for i in 0..@pages do
-  
-        #doc = Nokogiri::HTML(site open(site+"&por_pagina=30&pagina=#{i*30}"))
         
     site.css('.resultado').each do |auto|
       
@@ -110,11 +86,6 @@ module Scraping
     
   # autoplaza.com
   def self.autoplaza(site,make,model,state,year1)
-      
-      #doc = Nokogiri::HTML(open(site))
-      
-      #initialize variables
-      #@autoplaza = []
       
       site.css('#resultList li').each do |auto|
         
@@ -279,12 +250,7 @@ module Scraping
     
   # mercadolibre.com
   def self.mercadolibre(site,make,model,state,year1)
-    
-      #doc = Nokogiri::HTML(open(site+"_Desde_#{@page}_DisplayType_LF_OrderId_PRICE*DESC"))
-        
-      #if doc.search('#searchResults li').length == 0
-      #  @encontro_datos = false
-      #end
+
       site.css('#searchResults li.rowItem').each do |auto|  
         
         #get image
@@ -359,28 +325,7 @@ module Scraping
     
   #seminuevossonora.com
   def self.seminuevossonora(site,make,model,state,year1)
-    #@encontro_datos = true 
-    #@no_results = false
-    #@page = 0
     
-    #initialize variables
-    #@seminuevossonora = []
-    
-    #while @encontro_datos do   #While site have results, request url
-      
-      #doc = Nokogiri::HTML(open(site+"&page=#{@page}"))
-
-=begin
-      
-      if doc.search('.content .view-content').length == 0
-        @no_results = true
-      end
-    
-      if doc.search('.pager .pager-last').length == 0
-        @encontro_datos = false
-      end
-
-=end
       #if !@no_results
         site.css('.view-content table tr').each do |auto|  
          
@@ -505,10 +450,7 @@ module Scraping
                   }
                   rescue => exc
 		                puts exc.message
-                    #file = File.open("error.txt","a+")
-                    #file.puts("\n"+exc.message)
-                    #file.puts("\n"+site)
-                    #file.close
+                    
                   end
                 end                  
                 
